@@ -2,10 +2,12 @@
 
 import { useState } from "react"
 import Image from "next/image"
-import { Phone, Instagram, Facebook, Menu, X, Users, Music, Heart, Award, MapPin, Clock, CheckCircle, Sparkles, Zap } from "lucide-react"
+import { Phone, Instagram, Facebook, Menu, X, Users, Music, Heart, Award, MapPin, Clock, CheckCircle, Sparkles, Zap, House, Watch } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
+import { WhatsAppWidget } from "@/components/whatsapp-widget"
+import { watch } from "fs"
 
 const scheduleFromZero = [
   { day: "Martes", location: "Studio – Vélez Sarsfield 520", level: "Multinivel (apto principiantes)", style: "Salsa", time: "21:00 a 22:30" },
@@ -17,10 +19,10 @@ const scheduleFromZero = [
 const scheduleExperienced = [
   { day: "Martes", location: "Studio – Vélez Sarsfield 520", level: "Multinivel", style: "Salsa", time: "21:00 a 22:30" },
   { day: "Jueves", location: "Studio – Vélez Sarsfield 520", level: "Multinivel", style: "Bachata", time: "21:00 a 22:30" },
-  { day: "Sábado", location: "BestClub Gym – Chacabuco 472", level: "Principiantes 1 / 1.5", group: "Grupo 1", style: "Bachata", time: "16:30 a 18:00" },
-  { day: "Sábado", location: "BestClub Gym – Chacabuco 472", level: "Principiantes 2 / Intermedios", group: "Grupo 2", style: "Bachata", time: "16:30 a 18:00" },
-  { day: "Sábado", location: "BestClub Gym – Chacabuco 472", level: "Principiantes 1 / 1.5", group: "Grupo 1", style: "Salsa", time: "18:00 a 19:30" },
-  { day: "Sábado", location: "BestClub Gym – Chacabuco 472", level: "Principiantes 2 / Intermedios", group: "Grupo 2", style: "Salsa", time: "18:00 a 19:30" },
+  { day: "Sábado", location: "BestClub Gym – Chacabuco 472", level: "Principiantes 1 / 1.5", group: "Grupo 1", style: "Salsa", time: "16:30 a 18:00" },
+  { day: "Sábado", location: "BestClub Gym – Chacabuco 472", level: "Principiantes 2 / Intermedios", group: "Grupo 2", style: "Salsa", time: "16:30 a 18:00" },
+  { day: "Sábado", location: "BestClub Gym – Chacabuco 472", level: "Principiantes 1 / 1.5", group: "Grupo 1", style: "Bachata", time: "18:00 a 19:30" },
+  { day: "Sábado", location: "BestClub Gym – Chacabuco 472", level: "Principiantes 2 / Intermedios", group: "Grupo 2", style: "Bachata", time: "18:00 a 19:30" },
 ]
 
 const testimonials = [
@@ -29,18 +31,60 @@ const testimonials = [
   { name: "Carlos Rodríguez", quote: "Vine solo y encontré una comunidad. Ahora no me pierdo ninguna clase.", image: "/images/testimonial-3.jpg" },
 ]
 
+const WHATSAPP_NUMBER = "5493571551356"
+
+const whatsappLink = (message: string) => `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
+
+
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const navItems = [
     { name: "Inicio", href: "#inicio" },
+    { name: "Por qué bailar", href: "#por-que" },
     { name: "Sedes", href: "#sedes" },
     { name: "Niveles y Horarios", href: "#horarios" },
-    { name: "Clases", href: "#clases" },
-    { name: "Cultura", href: "#cultura" },
+    { name: "Nuestras Clases", href: "#clases" },
+    { name: "Nuestra Cultura", href: "#cultura" },
     { name: "Testimonios", href: "#testimonios" },
     { name: "Contacto", href: "#contacto" },
   ]
+
+  const [name, setName] = useState("")
+  const [email, setEmail] = useState("")
+  const [phone, setPhone] = useState("")
+
+  // Mensaje del form de contacto
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+
+    const message = `Hola!
+
+      Quiero empezar a bailar salsa y bachata.
+
+      Te dejo mis datos:
+      - Nombre: ${name}
+      - Email: ${email}
+      - Teléfono: ${phone}
+
+      ¿Podrías pasarme mas info?
+
+      Gracias! :)`
+
+    window.open(whatsappLink(message), "_blank")
+  }
+
+  // Restricciones del input telefono
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value
+
+    const cleanValue = value
+      .replace(/[^\d+]/g, "") // borra todo lo que no sea número o +
+      .replace(/(?!^)\+/g, "") // permite el + solo al principio
+      .slice(0, 16) // límite de caracteres
+
+    setPhone(cleanValue)
+  }
 
   return (
     <div className="min-h-screen bg-foreground text-card overflow-x-hidden">
@@ -68,9 +112,15 @@ export default function Home() {
             </nav>
 
             <div className="flex items-center gap-4">
-              <Button className="hidden sm:flex bg-primary hover:bg-primary/90 text-primary-foreground gap-2 rounded-full px-6">
+              <Button className="ml-5 hidden sm:flex bg-primary hover:bg-primary/90 text-primary-foreground gap-2 rounded-full px-6">
                 <Phone className="w-4 h-4" />
-                WhatsApp
+                <a
+                  href={whatsappLink("Hola! Quiero consultar por las clases de salsa y bachata.")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  WhatsApp
+                </a>
               </Button>
               <button
                 className="lg:hidden p-2 text-card"
@@ -98,7 +148,13 @@ export default function Home() {
               ))}
               <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground gap-2 rounded-full mt-4">
                 <Phone className="w-4 h-4" />
-                WhatsApp
+                <a
+                  href={whatsappLink("Hola, quiero consultar por las clases de salsa y bachata.")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  WhatsApp
+                </a>
               </Button>
             </div>
           </div>
@@ -122,37 +178,63 @@ export default function Home() {
         <div className="absolute top-1/4 right-10 w-32 h-32 border-4 border-primary/30 rounded-full animate-pulse hidden lg:block" />
         <div className="absolute bottom-1/4 left-10 w-20 h-20 bg-primary/20 rounded-full blur-xl hidden lg:block" />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-32">
-          <div className="max-w-3xl">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-12">
+          <div className="max-w-7xl mx-auto text-center flex flex-col items-center">
+
+            {/* Experiencia */}
             <div className="inline-flex items-center gap-2 bg-primary/20 text-primary px-4 py-2 rounded-full mb-6">
               <Zap className="w-4 h-4" />
-              <span className="text-sm font-semibold uppercase tracking-wide">+13 años de experiencia</span>
+              <span className="text-sm font-semibold uppercase tracking-wide">+20 años de experiencia</span>
             </div>
 
-            <h1 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-bold text-card leading-none text-balance">
-              Sentí el <span className="text-primary">ritmo.</span><br />
-              Viví la <span className="text-primary">pasión.</span>
-            </h1>
-            <p className="mt-6 text-xl text-card/80 leading-relaxed max-w-xl">
-              Salsa y Bachata en Córdoba. Clases para todos los niveles en un ambiente lleno de energía y buenas vibras.
-            </p>
+            {/* Título principal */}
+            <div>
+              <h1 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-bold text-card leading-none text-balance">
+                Corta <span className="text-primary">la Semana.</span><br />
+                <span className="text-primary">o</span><br />
+                Hace del Sábado <span className="text-primary">tu día Especial.</span>
+              </h1>
+              <p className="mt-6 text-xl text-card/80 leading-relaxed max-w-4xl mx-auto text-center">
+                Dale un Giro a tu vida, Divertite, Hace amigos y Descubrí el Ritmo que llevas dentro… <br /> En un espacio diseñado especialmente para vos, lleno de energía.
+              </p>
+            </div>
 
+            {/* Titulo secundario */}
+            <div className="mt-20">
+              <h2 className="font-extralight text-3xl sm:text-4xl lg:text-5xl text-card/85 leading-none text-balance">
+                Clases de Salsa y Bachata en Córdoba
+              </h2>
+              <p className="mt-6 text-lg text-card/80 leading-relaxed max-w-4xl mx-auto text-center">
+                Para todos los Niveles Para ir solo/a en pareja o con tus amistades.<br /> Conoce todos los Planes y Promos que tenemos para vos!!
+              </p>
+            </div>
+
+            {/* Botones */}
             <div className="mt-10 flex flex-col sm:flex-row gap-4">
               <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2 rounded-full text-lg px-8 py-6">
                 <Phone className="w-5 h-5" />
-                Consultar por WhatsApp
+                <a
+                  href={whatsappLink("Hola! Vi la página de salsa y bachata en Córdoba y quiero empezar a bailar. ¿Me pasás mas info?")}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Consultar por WhatsApp
+                </a>
               </Button>
               <Button size="lg" variant="outline" className="border-2 border-card text-card hover:bg-card hover:text-foreground gap-2 rounded-full text-lg px-8 py-6 bg-transparent">
-                Ver horarios
+                <a href="#horarios">Ver horarios</a>
               </Button>
             </div>
 
+            {/* Características */}
             <div className="mt-12 flex flex-wrap gap-6">
               {[
+                { icon: House, text: "2 de los Salones más Grandes de Córdoba" },
                 { icon: Users, text: "Multinivel" },
                 { icon: Heart, text: "Ambiente único" },
                 { icon: Award, text: "4+ profes" },
-                { icon: Music, text: "Desde cero" },
+                { icon: Music, text: "Desde Cero y Todos los Niveles" },
+                { icon: Watch, text: "Jornadas de Clases Extendidas de 1 hora y media" },
               ].map((item) => (
                 <div key={item.text} className="flex items-center gap-3 bg-card/10 px-4 py-2 rounded-full">
                   <item.icon className="w-5 h-5 text-primary" />
@@ -176,7 +258,7 @@ export default function Home() {
             <span className="text-primary font-semibold uppercase tracking-wider text-sm">Beneficios</span>
             <h2 className="font-serif text-4xl sm:text-5xl font-bold text-card mt-2 text-balance">¿Por qué aprender salsa y bachata?</h2>
             <p className="mt-4 text-card/70 leading-relaxed text-lg">
-              En nuestra academia de salsa en Córdoba podés empezar desde cero y descubrir una forma divertida de moverte, conocer gente y disfrutar la música.
+              En nuestra academia Salsa en Córdoba podés aprender a bailar desde cero, conocer gente, moverte y divertirte. Llegate a nuestras clases y descubrí de forma divertida el Ritmo que hay en vos!
             </p>
           </div>
 
@@ -248,7 +330,7 @@ export default function Home() {
             <span className="text-primary font-semibold uppercase tracking-wider text-sm">Ubicaciones</span>
             <h2 className="font-serif text-4xl sm:text-5xl font-bold text-card mt-2">Nuestras Sedes</h2>
             <p className="mt-4 text-card/70 leading-relaxed text-lg">
-              Elegí la sede que mejor se adapte a tu rutina y conocé el espacio donde se viven nuestras clases.
+              Elegí la sede que mejor se adapte a tus tiempos y a tu rutina. <br /> Conoce donde se viven nuestras clases.
             </p>
           </div>
 
@@ -268,7 +350,7 @@ export default function Home() {
                   <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 to-transparent" />
                   <div className="absolute bottom-4 left-4">
                     <span className="bg-primary text-primary-foreground px-4 py-2 rounded-full text-sm font-bold">
-                      Sucursal Studio
+                      SUCURSAL STUDIO
                     </span>
                   </div>
                 </div>
@@ -293,11 +375,11 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Map Placeholder */}
+                {/* Map Placeholder STUDIO */}
                 <div className="p-4">
                   <div className="relative h-48 rounded-xl overflow-hidden bg-card/10 border border-card/20">
                     <iframe
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3405.0!2d-64.19!3d-31.42!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzHCsDI1JzEyLjAiUyA2NMKwMTEnMjQuMCJX!5e0!3m2!1sen!2sar!4v1"
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3404.7386783558304!2d-64.19215342350932!3d-31.42132519649172!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9432a3a0e80a326f%3A0xef01065cef7c5957!2sStudio%20Multiespacio!5e0!3m2!1ses-419!2sus!4v1777463974328!5m2!1ses-419!2sus"
                       width="100%"
                       height="100%"
                       style={{ border: 0 }}
@@ -317,7 +399,7 @@ export default function Home() {
                     </div>
                     <div>
                       <h3 className="font-serif text-xl font-bold text-card mb-1">Av. Vélez Sarsfield 520</h3>
-                      <p className="text-card/60 text-sm">En casi esquina Clínica Oulton</p>
+                      <p className="text-card/60 text-sm">En casi esquina Clínica Oulton (misma cuadra y vereda)</p>
                     </div>
                   </div>
                 </div>
@@ -339,7 +421,7 @@ export default function Home() {
                   <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 to-transparent" />
                   <div className="absolute bottom-4 left-4">
                     <span className="bg-accent text-accent-foreground px-4 py-2 rounded-full text-sm font-bold">
-                      Sucursal Best Club
+                      SUCURSAL BESTCLUB
                     </span>
                   </div>
                 </div>
@@ -364,11 +446,11 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Map Placeholder */}
+                {/* Map Placeholder BESTCLUB*/}
                 <div className="p-4">
                   <div className="relative h-48 rounded-xl overflow-hidden bg-card/10 border border-card/20">
                     <iframe
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3405.0!2d-64.18!3d-31.41!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMzHCsDI0JzM2LjAiUyA2NMKwMTAnNDguMCJX!5e0!3m2!1sen!2sar!4v1"
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3404.68033830429!2d-64.18531322350927!3d-31.42293219656928!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9432a29007ba43a1%3A0x71d68825809b990e!2sBest%20Club!5e0!3m2!1ses-419!2sus!4v1777463892343!5m2!1ses-419!2sus"
                       width="100%"
                       height="100%"
                       style={{ border: 0 }}
@@ -439,7 +521,7 @@ export default function Home() {
                         <div className="space-y-1">
                           <p className="font-medium text-foreground">{item.style}</p>
                           <p className="text-sm text-muted-foreground">{item.level}</p>
-                          <p className="text-xs text-muted-foreground flex items-center gap-1">
+                          <p className="font-medium text-muted-foreground flex items-center gap-1">
                             <MapPin className="w-3 h-3" />
                             {item.location}
                           </p>
@@ -447,6 +529,53 @@ export default function Home() {
                       </div>
                     </div>
                   ))}
+
+                  {/* plan university */}
+
+                  <div className="mt-4 rounded-xl border-2 border-[#7c5cff] bg-gradient-to-r from-orange-600 via-red-600 to-red-700 px-5 py-5 text-white shadow-md">
+
+                    {/* HEADER */}
+                    <div className="flex items-start justify-between mb-4">
+
+                      {/* IZQUIERDA → UNIVERSITY */}
+                      <div>
+                        <p className="text-xs font-bold uppercase tracking-wider text-black/80">
+                          Nuevo grupo
+                        </p>
+
+                        <h4 className="font-serif text-3xl sm:text-4xl font-bold italic text-white leading-none drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)]">
+                          University
+                        </h4>
+                      </div>
+
+                      {/* DERECHA → HORARIO + EDAD */}
+                      <div className="flex flex-col items-end gap-2">
+                        <span className="rounded-full bg-white/20 px-3 py-1 text-sm font-semibold">
+                          18:00 a 19:30
+                        </span>
+                        <span className="rounded-full bg-white/20 px-3 py-1 text-sm font-semibold">
+                          De 18 a 30 años
+                        </span>
+                      </div>
+
+                    </div>
+
+                    <div className="mt-4 space-y-2">
+                      <p className="text-lg font-semibold">Salsa y Bachata</p>
+
+                      <p className="text-sm text-white/90">
+                        Grupo pensado para estudiantes y gente joven que quiera aprender, conocer gente y bailar con personas de su misma edad.
+                      </p>
+
+                      <p className="text-sm font-semibold text-white/95">
+                        Es el único horario con restricción de edad.
+                      </p>
+
+                      <div className="flex flex-col gap-1 pt-1 text-base">
+                        <p className="font-medium">BestClub Gym - Chacabuco 472</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -480,7 +609,7 @@ export default function Home() {
                         <div className="space-y-1">
                           <p className="font-medium text-foreground">{item.style}</p>
                           <p className="text-sm text-muted-foreground">{item.level}</p>
-                          <p className="text-xs text-muted-foreground flex items-center gap-1">
+                          <p className="font-medium  text-muted-foreground flex items-center gap-1">
                             <MapPin className="w-3 h-3" />
                             {item.location}
                           </p>
@@ -530,7 +659,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Cultura */}
+      {/* Nuestra Cultura */}
       <section id="cultura" className="py-20 lg:py-28 bg-foreground relative overflow-hidden">
         <div className="absolute top-0 right-0 w-1/2 h-full">
           <Image
@@ -569,12 +698,12 @@ export default function Home() {
 
             <div className="inline-flex items-center gap-6 bg-primary/20 rounded-2xl p-6">
               <div className="text-center">
-                <p className="font-serif text-4xl font-bold text-primary">13+</p>
+                <p className="font-serif text-4xl font-bold text-primary">20+</p>
                 <p className="text-sm text-card/70">Años</p>
               </div>
               <div className="w-px h-12 bg-card/20" />
               <div className="text-center">
-                <p className="font-serif text-4xl font-bold text-primary">1000+</p>
+                <p className="font-serif text-4xl font-bold text-primary">3000+</p>
                 <p className="text-sm text-card/70">Alumnos</p>
               </div>
               <div className="w-px h-12 bg-card/20" />
@@ -637,21 +766,27 @@ export default function Home() {
                 ¿Querés empezar a bailar?
               </h2>
               <p className="text-card/70 leading-relaxed text-lg mb-8">
-                Dejanos tu consulta y te asesoramos según tu nivel y disponibilidad. También podés contactarnos directamente por WhatsApp.
+                Dejanos tu consulta y te asesoramos según tu nivel y disponibilidad. También podés visitar nuestro perfil de Instagram y Facebook.
               </p>
 
-              <div className="space-y-4 mb-8">
-                <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2 rounded-full px-8">
-                  <Phone className="w-5 h-5" />
-                  Contactanos por WhatsApp
-                </Button>
-              </div>
-
               <div className="flex gap-4">
-                <a href="#" className="w-12 h-12 bg-card/10 rounded-full flex items-center justify-center hover:bg-primary text-card hover:text-primary-foreground transition-colors">
+                <a
+                  aria-label="Abrir Instagram"
+                  href="https://www.instagram.com/salsa.en.cordoba?igsh=MW5ua2NjdDN4a21lOA=="
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-12 h-12 bg-card/10 rounded-full flex items-center justify-center hover:bg-primary text-card hover:text-primary-foreground transition-colors"
+                >
                   <Instagram className="w-6 h-6" />
                 </a>
-                <a href="#" className="w-12 h-12 bg-card/10 rounded-full flex items-center justify-center hover:bg-primary text-card hover:text-primary-foreground transition-colors">
+
+                <a
+                  aria-label="Abrir Facebook"
+                  href="https://www.facebook.com/Salsa.en.Cordoba1?rdid=hd1RaF0Wfv1ZMEWc&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F18Hpq3zRsX%2F#"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-12 h-12 bg-card/10 rounded-full flex items-center justify-center hover:bg-primary text-card hover:text-primary-foreground transition-colors"
+                >
                   <Facebook className="w-6 h-6" />
                 </a>
               </div>
@@ -661,19 +796,36 @@ export default function Home() {
               <div className="absolute -inset-1 bg-gradient-to-r from-primary to-orange-500 rounded-3xl blur-sm opacity-30" />
               <Card className="relative border-card/20 bg-card/5 backdrop-blur-sm">
                 <CardContent className="p-6">
-                  <form className="space-y-4">
-                    <div>
-                      <label className="text-sm font-medium text-card mb-2 block">Nombre *</label>
-                      <Input placeholder="Tu nombre" className="bg-card/10 border-card/20 text-card placeholder:text-card/40" />
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium text-card mb-2 block">Email *</label>
-                      <Input type="email" placeholder="tu@email.com" className="bg-card/10 border-card/20 text-card placeholder:text-card/40" />
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium text-card mb-2 block">Teléfono</label>
-                      <Input placeholder="+54" className="bg-card/10 border-card/20 text-card placeholder:text-card/40" />
-                    </div>
+                  <form onSubmit={handleSubmit} className="space-y-4">
+                    <Input
+                      type="text"
+                      placeholder="Tu nombre"
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                      required
+                      maxLength={30}
+                      className="bg-card/10 border-card/20 text-card placeholder:text-card/40"
+                    />
+
+                    <Input
+                      type="email"
+                      placeholder="tu@email.com"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      required
+                      maxLength={50}
+                      className="bg-card/10 border-card/20 text-card placeholder:text-card/40"
+                    />
+
+                    <Input
+                      type="tel"
+                      placeholder="+54 9 1234 5678"
+                      value={phone}
+                      onChange={handlePhoneChange}
+                      required
+                      maxLength={30}
+                      className="bg-card/10 border-card/20 text-card placeholder:text-card/40"
+                    />
                     <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground rounded-full">
                       Enviar consulta
                     </Button>
@@ -696,21 +848,13 @@ export default function Home() {
               <span className="font-serif text-xl font-bold text-card">Salsa en Córdoba</span>
             </div>
 
-            <p className="text-card/50 text-sm">
-              © 2024 Salsa en Córdoba. Todos los derechos reservados.
-            </p>
-
-            <div className="flex gap-4">
-              <a href="#" className="text-card/50 hover:text-primary transition-colors">
-                <Instagram className="w-5 h-5" />
-              </a>
-              <a href="#" className="text-card/50 hover:text-primary transition-colors">
-                <Facebook className="w-5 h-5" />
-              </a>
-            </div>
+            <p className="text-card/50 text-sm">© 2026 Salsa en Córdoba. Todos los derechos reservados.</p>
           </div>
         </div>
       </footer>
+
+      {/* WhatsApp Widget */}
+      <WhatsAppWidget />
     </div>
   )
 }
