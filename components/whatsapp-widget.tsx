@@ -35,7 +35,7 @@ export function WhatsAppWidget() {
 
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    const whatsappPhone = '5493571551356'
+    const whatsappPhone = '5493513715379'
     const message = `Hola! Soy ${formData.name}. Me gustaría info sobre las clases. Mi email es ${formData.email} y mi teléfono es ${formData.phone}.`
     const whatsappUrl = `https://wa.me/${whatsappPhone}?text=${encodeURIComponent(message)}`
     window.open(whatsappUrl, '_blank')

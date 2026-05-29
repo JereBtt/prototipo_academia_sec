@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { WhatsAppWidget } from "@/components/whatsapp-widget"
-import { watch } from "fs"
 
 const scheduleFromZero = [
   { day: "Martes", location: "Studio – Vélez Sarsfield 520", level: "Multinivel (apto principiantes)", style: "Salsa", time: "21:00 a 22:30" },
@@ -31,7 +30,7 @@ const testimonials = [
   { name: "Carlos Rodríguez", quote: "Vine solo y encontré una comunidad. Ahora no me pierdo ninguna clase.", image: "/images/testimonial-3.jpg" },
 ]
 
-const WHATSAPP_NUMBER = "5493571551356"
+const WHATSAPP_NUMBER = "5493513715379"
 
 const whatsappLink = (message: string) => `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
 
