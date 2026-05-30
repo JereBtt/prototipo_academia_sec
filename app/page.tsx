@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import { Phone, Instagram, Facebook, Menu, X, Users, Music, Heart, Award, MapPin, Clock, CheckCircle, Sparkles, Zap, House, Watch } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -36,6 +36,7 @@ const whatsappLink = (message: string) => `https://wa.me/${WHATSAPP_NUMBER}?text
 
 
 export default function Home() {
+  const heroRef = useRef<HTMLElement | null>(null)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   const navItems = [
@@ -84,6 +85,53 @@ export default function Home() {
 
     setPhone(cleanValue)
   }
+
+  useEffect(() => {
+    const hero = heroRef.current
+
+    if (!hero) return
+
+    const reduceMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)")
+    let animationFrame: number | null = null
+
+    const updateParallax = () => {
+      animationFrame = null
+
+      if (reduceMotionQuery.matches) {
+        hero.style.setProperty("--hero-parallax", "0px")
+        return
+      }
+
+      const rect = hero.getBoundingClientRect()
+      const heroIsVisible = rect.bottom > 0 && rect.top < window.innerHeight
+
+      if (!heroIsVisible) return
+
+      const offset = Math.min(Math.max(-rect.top * 0.38, -56), 190)
+      hero.style.setProperty("--hero-parallax", `${offset}px`)
+    }
+
+    const requestUpdate = () => {
+      if (animationFrame === null) {
+        animationFrame = window.requestAnimationFrame(updateParallax)
+      }
+    }
+
+    updateParallax()
+    window.addEventListener("scroll", requestUpdate, { passive: true })
+    window.addEventListener("resize", requestUpdate)
+    reduceMotionQuery.addEventListener("change", requestUpdate)
+
+    return () => {
+      window.removeEventListener("scroll", requestUpdate)
+      window.removeEventListener("resize", requestUpdate)
+      reduceMotionQuery.removeEventListener("change", requestUpdate)
+
+      if (animationFrame !== null) {
+        window.cancelAnimationFrame(animationFrame)
+      }
+    }
+  }, [])
 
   return (
     <div className="min-h-screen bg-foreground text-card overflow-x-hidden">
@@ -161,15 +209,20 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section id="inicio" className="relative min-h-screen flex items-center pt-16 lg:pt-20">
+      <section ref={heroRef} id="inicio" className="relative min-h-screen flex items-center overflow-hidden pt-16 lg:pt-20">
         <div className="absolute inset-0">
-          <Image
-            src="/images/hero-dancing.jpg"
-            alt="Pareja bailando salsa"
-            fill
-            className="object-cover"
-            priority
-          />
+          <div
+            className="absolute -inset-y-28 inset-x-0 will-change-transform"
+            style={{ transform: "translate3d(0, var(--hero-parallax, 0px), 0) scale(1.1)" }}
+          >
+            <Image
+              src="/images/fondo-hero3.png"
+              alt="Pareja bailando salsa"
+              fill
+              className="object-cover"
+              priority
+            />
+          </div>
           <div className="absolute inset-0 bg-foreground/70" />
         </div>
 
