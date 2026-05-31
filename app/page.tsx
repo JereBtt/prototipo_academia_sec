@@ -44,46 +44,13 @@ export default function Home() {
     { name: "Por qué bailar", href: "#por-que" },
     { name: "Sedes", href: "#sedes" },
     { name: "Niveles y Horarios", href: "#horarios" },
-    { name: "Nuestras Clases", href: "#clases" },
     { name: "Nuestra Cultura", href: "#cultura" },
     { name: "Testimonios", href: "#testimonios" },
     { name: "Contacto", href: "#contacto" },
   ]
 
-  const [name, setName] = useState("")
-  const [email, setEmail] = useState("")
-  const [phone, setPhone] = useState("")
-
-  // Mensaje del form de contacto
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault()
-
-    const message = `Hola!
-
-      Quiero empezar a bailar salsa y bachata.
-
-      Te dejo mis datos:
-      - Nombre: ${name}
-      - Email: ${email}
-      - Teléfono: ${phone}
-
-      ¿Podrías pasarme mas info?
-
-      Gracias! :)`
-
-    window.open(whatsappLink(message), "_blank")
-  }
-
-  // Restricciones del input telefono
-  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value
-
-    const cleanValue = value
-      .replace(/[^\d+]/g, "") // borra todo lo que no sea número o +
-      .replace(/(?!^)\+/g, "") // permite el + solo al principio
-      .slice(0, 16) // límite de caracteres
-
-    setPhone(cleanValue)
+  const openWhatsAppWidget = () => {
+    window.dispatchEvent(new Event("open-whatsapp-widget"))
   }
 
   useEffect(() => {
@@ -91,6 +58,7 @@ export default function Home() {
 
     if (!hero) return
 
+    const mobileQuery = window.matchMedia("(max-width: 767px)")
     const reduceMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)")
     let animationFrame: number | null = null
 
@@ -107,7 +75,12 @@ export default function Home() {
 
       if (!heroIsVisible) return
 
-      const offset = Math.min(Math.max(-rect.top * 0.38, -56), 190)
+      const scrollDistance = window.scrollY - hero.offsetTop
+      const strength = mobileQuery.matches ? 0.46 : 0.38
+      const minOffset = mobileQuery.matches ? -72 : -56
+      const maxOffset = mobileQuery.matches ? 150 : 190
+      const offset = Math.min(Math.max(scrollDistance * strength, minOffset), maxOffset)
+
       hero.style.setProperty("--hero-parallax", `${offset}px`)
     }
 
@@ -120,11 +93,13 @@ export default function Home() {
     updateParallax()
     window.addEventListener("scroll", requestUpdate, { passive: true })
     window.addEventListener("resize", requestUpdate)
+    mobileQuery.addEventListener("change", requestUpdate)
     reduceMotionQuery.addEventListener("change", requestUpdate)
 
     return () => {
       window.removeEventListener("scroll", requestUpdate)
       window.removeEventListener("resize", requestUpdate)
+      mobileQuery.removeEventListener("change", requestUpdate)
       reduceMotionQuery.removeEventListener("change", requestUpdate)
 
       if (animationFrame !== null) {
@@ -135,31 +110,47 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-foreground text-card overflow-x-hidden">
+      {mobileMenuOpen && (
+        <button
+          type="button"
+          aria-label="Cerrar menu"
+          className="fixed inset-0 z-40 cursor-default bg-transparent lg:hidden"
+          onClick={() => setMobileMenuOpen(false)}
+        />
+      )}
+
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-foreground/95 backdrop-blur-sm border-b border-card/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 lg:h-20">
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center rotate-3">
-                <Sparkles className="w-6 h-6 text-primary-foreground" />
+          <div className="grid grid-cols-[1fr_2.5rem] items-center gap-3 h-16 lg:h-20 lg:grid-cols-[auto_1fr_auto] lg:gap-4">
+            <div className="flex min-w-0 items-center gap-3">
+              <div className="relative h-11 w-11 flex-shrink-0 overflow-hidden rounded-lg bg-black">
+                <Image
+                  src="/images/logo-sec-navbar.png"
+                  alt="Salsa en CÃ³rdoba"
+                  fill
+                  sizes="44px"
+                  className="object-contain p-1"
+                  priority
+                />
               </div>
               <span className="font-serif text-2xl font-bold text-card">Salsa en Córdoba</span>
             </div>
 
-            <nav className="hidden lg:flex items-center gap-8">
+            <nav className="hidden lg:flex items-center justify-center gap-6 xl:gap-8">
               {navItems.map((item) => (
                 <a
                   key={item.name}
                   href={item.href}
-                  className="text-sm font-semibold text-card/70 hover:text-primary transition-colors uppercase tracking-wide"
+                  className="text-center text-sm font-semibold text-card/70 hover:text-primary transition-colors uppercase tracking-wide"
                 >
                   {item.name}
                 </a>
               ))}
             </nav>
 
-            <div className="flex items-center gap-4">
-              <Button className="ml-5 hidden sm:flex bg-primary hover:bg-primary/90 text-primary-foreground gap-2 rounded-full px-6">
+            <div className="flex items-center justify-self-end gap-4">
+              <Button className="hidden lg:flex bg-primary hover:bg-primary/90 text-primary-foreground gap-2 rounded-full px-6">
                 <Phone className="w-4 h-4" />
                 <a
                   href={whatsappLink("Hola! Quiero consultar por las clases de salsa y bachata.")}
@@ -170,8 +161,11 @@ export default function Home() {
                 </a>
               </Button>
               <button
-                className="lg:hidden p-2 text-card"
+                className="justify-self-end p-2 text-card lg:hidden"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                aria-expanded={mobileMenuOpen}
+                aria-controls="mobile-menu"
+                aria-label={mobileMenuOpen ? "Cerrar menu" : "Abrir menu"}
               >
                 {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
               </button>
@@ -181,7 +175,7 @@ export default function Home() {
 
         {/* Mobile menu */}
         {mobileMenuOpen && (
-          <div className="lg:hidden bg-foreground border-t border-card/10">
+          <div id="mobile-menu" className="lg:hidden bg-foreground border-t border-card/10">
             <div className="px-4 py-4 space-y-3">
               {navItems.map((item) => (
                 <a
@@ -445,13 +439,12 @@ export default function Home() {
 
                 {/* Location Info */}
                 <div className="p-6 pt-2">
-                  <div className="flex items-start gap-4">
+                  <div className="flex items-center gap-4">
                     <div className="w-12 h-12 bg-primary rounded-xl flex items-center justify-center flex-shrink-0 -rotate-3">
                       <MapPin className="w-6 h-6 text-primary-foreground" />
                     </div>
                     <div>
-                      <h3 className="font-serif text-xl font-bold text-card mb-1">Av. Vélez Sarsfield 520</h3>
-                      <p className="text-card/60 text-sm">En casi esquina Clínica Oulton (misma cuadra y vereda)</p>
+                      <h3 className="font-serif text-xl font-bold text-card leading-tight">Av. Vélez Sarsfield 520</h3>
                     </div>
                   </div>
                 </div>
@@ -516,13 +509,12 @@ export default function Home() {
 
                 {/* Location Info */}
                 <div className="p-6 pt-2">
-                  <div className="flex items-start gap-4">
+                  <div className="flex items-center gap-4">
                     <div className="w-12 h-12 bg-accent rounded-xl flex items-center justify-center flex-shrink-0 rotate-3">
                       <MapPin className="w-6 h-6 text-accent-foreground" />
                     </div>
                     <div>
-                      <h3 className="font-serif text-xl font-bold text-card mb-1">Bv. Chacabuco 472</h3>
-                      <p className="text-card/60 text-sm">A la vuelta de Universidad Siglo 21</p>
+                      <h3 className="font-serif text-xl font-bold text-card leading-tight">Bv. Chacabuco 472</h3>
                     </div>
                   </div>
                 </div>
@@ -581,53 +573,6 @@ export default function Home() {
                       </div>
                     </div>
                   ))}
-
-                  {/* plan university */}
-
-                  <div className="mt-4 rounded-xl border-2 border-[#7c5cff] bg-gradient-to-r from-orange-600 via-red-600 to-red-700 px-5 py-5 text-white shadow-md">
-
-                    {/* HEADER */}
-                    <div className="flex items-start justify-between mb-4">
-
-                      {/* IZQUIERDA → UNIVERSITY */}
-                      <div>
-                        <p className="text-xs font-bold uppercase tracking-wider text-black/80">
-                          Nuevo grupo
-                        </p>
-
-                        <h4 className="font-serif text-3xl sm:text-4xl font-bold italic text-white leading-none drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)]">
-                          University
-                        </h4>
-                      </div>
-
-                      {/* DERECHA → HORARIO + EDAD */}
-                      <div className="flex flex-col items-end gap-2">
-                        <span className="rounded-full bg-white/20 px-3 py-1 text-sm font-semibold">
-                          18:00 a 19:30
-                        </span>
-                        <span className="rounded-full bg-white/20 px-3 py-1 text-sm font-semibold">
-                          De 18 a 30 años
-                        </span>
-                      </div>
-
-                    </div>
-
-                    <div className="mt-4 space-y-2">
-                      <p className="text-lg font-semibold">Salsa y Bachata</p>
-
-                      <p className="text-sm text-white/90">
-                        Grupo pensado para estudiantes y gente joven que quiera aprender, conocer gente y bailar con personas de su misma edad.
-                      </p>
-
-                      <p className="text-sm font-semibold text-white/95">
-                        Es el único horario con restricción de edad.
-                      </p>
-
-                      <div className="flex flex-col gap-1 pt-1 text-base">
-                        <p className="font-medium">BestClub Gym - Chacabuco 472</p>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
@@ -672,41 +617,6 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Nuestras Clases */}
-      <section id="clases" className="py-20 lg:py-28 bg-foreground relative">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(185,28,28,0.1),transparent_50%)]" />
-
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="text-primary font-semibold uppercase tracking-wider text-sm">Metodología</span>
-            <h2 className="font-serif text-4xl sm:text-5xl font-bold text-card mt-2">Nuestras Clases</h2>
-            <p className="mt-4 text-card/70 leading-relaxed text-lg">
-              Aprendé a tu ritmo con profesores dedicados y una metodología pensada para que disfrutes.
-            </p>
-          </div>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              { icon: Users, title: "Multinivel", description: "Grupos organizados según tu nivel real de baile.", color: "from-red-600 to-orange-500" },
-              { icon: Award, title: "4+ Profes", description: "Atención personalizada y correcciones en tiempo real.", color: "from-orange-500 to-yellow-500" },
-              { icon: Music, title: "Musicalidad", description: "Técnica, ritmo y conexión con la música latina.", color: "from-red-700 to-red-500" },
-              { icon: Heart, title: "Diversión", description: "Un espacio donde el protagonista sos vos.", color: "from-red-500 to-pink-500" },
-            ].map((feature) => (
-              <div
-                key={feature.title}
-                className="group relative bg-card/5 border border-card/10 rounded-2xl p-6 hover:bg-card/10 transition-all duration-300 hover:-translate-y-1"
-              >
-                <div className={`w-14 h-14 bg-gradient-to-br ${feature.color} rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-                  <feature.icon className="w-7 h-7 text-card" />
-                </div>
-                <h3 className="font-serif text-xl font-bold text-card mb-2">{feature.title}</h3>
-                <p className="text-card/60 text-sm leading-relaxed">{feature.description}</p>
-              </div>
-            ))}
           </div>
         </div>
       </section>
@@ -848,40 +758,48 @@ export default function Home() {
               <div className="absolute -inset-1 bg-gradient-to-r from-primary to-orange-500 rounded-3xl blur-sm opacity-30" />
               <Card className="relative border-card/20 bg-card/5 backdrop-blur-sm">
                 <CardContent className="p-6">
-                  <form onSubmit={handleSubmit} className="space-y-4">
+                  <div
+                    className="space-y-4"
+                    role="button"
+                    tabIndex={0}
+                    onClick={openWhatsAppWidget}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault()
+                        openWhatsAppWidget()
+                      }
+                    }}
+                  >
                     <Input
                       type="text"
                       placeholder="Tu nombre"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      required
                       maxLength={30}
+                      readOnly
+                      onFocus={openWhatsAppWidget}
                       className="bg-card/10 border-card/20 text-card placeholder:text-card/40"
                     />
 
                     <Input
                       type="email"
                       placeholder="tu@email.com"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
                       maxLength={50}
+                      readOnly
+                      onFocus={openWhatsAppWidget}
                       className="bg-card/10 border-card/20 text-card placeholder:text-card/40"
                     />
 
                     <Input
                       type="tel"
                       placeholder="+54 9 1234 5678"
-                      value={phone}
-                      onChange={handlePhoneChange}
-                      required
                       maxLength={30}
+                      readOnly
+                      onFocus={openWhatsAppWidget}
                       className="bg-card/10 border-card/20 text-card placeholder:text-card/40"
                     />
-                    <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground rounded-full">
+                    <Button type="button" className="w-full bg-primary hover:bg-primary/90 text-primary-foreground rounded-full">
                       Enviar consulta
                     </Button>
-                  </form>
+                  </div>
                 </CardContent>
               </Card>
             </div>

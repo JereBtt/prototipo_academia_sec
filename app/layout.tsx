@@ -14,6 +14,10 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: 'Salsa en Córdoba - Academia de Salsa y Bachata',
   description: 'Aprendé Salsa y Bachata en Córdoba, Argentina. Clases multinivel para principiantes y avanzados. Más de 13 años haciendo bailar corazones.',
+  icons: {
+    icon: '/images/favicon-sec.png',
+    apple: '/images/favicon-sec.png',
+  },
 }
 
 export default function RootLayout({
