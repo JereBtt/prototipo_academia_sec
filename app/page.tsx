@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
-import { Phone, Instagram, Facebook, Menu, X, Users, Music, Heart, Award, MapPin, Clock, CheckCircle, Sparkles, Zap, House, Watch } from "lucide-react"
+import { Phone, Instagram, Facebook, Menu, X, Users, Music, Heart, Award, MapPin, Clock, CheckCircle, Sparkles, Zap, House, Watch, ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
@@ -34,10 +34,49 @@ const WHATSAPP_NUMBER = "5493513715379"
 
 const whatsappLink = (message: string) => `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
 
+const heroSlides = [
+  {
+    phrase: "Salsa y Bachata.",
+    image: "/images/hero-carousel-1-salsa-bachata.png",
+    alt: "Pareja bailando salsa y bachata",
+    imageClass: "object-cover object-center sm:object-contain",
+    backdropClass: "opacity-25",
+  },
+  {
+    phrase: "Cortá la semana o hacé del sábado tu día especial.",
+    image: "/images/hero-carousel-2-corta-semana.png",
+    alt: "Pareja bailando en clase",
+    imageClass: "object-cover object-center sm:object-contain",
+    backdropClass: "opacity-25",
+  },
+  {
+    phrase: "¡Hacé amigos y divertite!",
+    image: "/images/hero-carousel-3-amigos.png",
+    alt: "Grupo de alumnos bailando salsa",
+    imageClass: "object-contain sm:object-cover sm:object-center lg:object-contain",
+    backdropClass: "opacity-30 lg:opacity-25",
+  },
+  {
+    phrase: "Dale un giro a tu vida.",
+    image: "/images/hero-carousel-4-giro.png",
+    alt: "Grupo de alumnos de Salsa en Córdoba",
+    imageClass: "object-contain sm:object-cover sm:object-center lg:object-contain",
+    backdropClass: "opacity-30 lg:opacity-25",
+  },
+  {
+    phrase: "Promo universitarios.",
+    image: "/images/hero-carousel-5-universitarios.png",
+    alt: "Pareja joven bailando en estudio",
+    imageClass: "object-cover object-center sm:object-contain",
+    backdropClass: "opacity-25",
+  },
+] as const
+
 
 export default function Home() {
   const heroRef = useRef<HTMLElement | null>(null)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [activeHeroSlide, setActiveHeroSlide] = useState(0)
 
   const navItems = [
     { name: "Inicio", href: "#inicio" },
@@ -52,6 +91,22 @@ export default function Home() {
   const openWhatsAppWidget = () => {
     window.dispatchEvent(new Event("open-whatsapp-widget"))
   }
+
+  const showPreviousHeroSlide = () => {
+    setActiveHeroSlide((currentSlide) => (currentSlide - 1 + heroSlides.length) % heroSlides.length)
+  }
+
+  const showNextHeroSlide = () => {
+    setActiveHeroSlide((currentSlide) => (currentSlide + 1) % heroSlides.length)
+  }
+
+  useEffect(() => {
+    const slideTimer = window.setInterval(() => {
+      setActiveHeroSlide((currentSlide) => (currentSlide + 1) % heroSlides.length)
+    }, 4200)
+
+    return () => window.clearInterval(slideTimer)
+  }, [])
 
   useEffect(() => {
     const hero = heroRef.current
@@ -123,7 +178,7 @@ export default function Home() {
       <header className="fixed top-0 left-0 right-0 z-50 bg-foreground/95 backdrop-blur-sm border-b border-card/10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-[1fr_2.5rem] items-center gap-3 h-16 lg:h-20 lg:grid-cols-[auto_1fr_auto] lg:gap-4">
-            <div className="flex min-w-0 items-center gap-3">
+            <a href="#inicio" className="flex min-w-0 items-center gap-3" aria-label="Ir al inicio">
               <div className="relative h-11 w-11 flex-shrink-0 overflow-hidden rounded-lg bg-black">
                 <Image
                   src="/images/logo-sec-navbar.png"
@@ -135,7 +190,7 @@ export default function Home() {
                 />
               </div>
               <span className="font-serif text-2xl font-bold text-card">Salsa en Córdoba</span>
-            </div>
+            </a>
 
             <nav className="hidden lg:flex items-center justify-center gap-6 xl:gap-8">
               {navItems.map((item) => (
@@ -226,33 +281,65 @@ export default function Home() {
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-12">
           <div className="max-w-7xl mx-auto text-center flex flex-col items-center">
+            <div className="w-full max-w-4xl">
+              <div className="relative w-full overflow-hidden rounded-2xl border border-card/15 bg-foreground/80 shadow-2xl shadow-black/30 backdrop-blur-sm aspect-[4/5] sm:aspect-square lg:aspect-[5/4]">
+                {heroSlides.map((slide, index) => (
+                  <div
+                    key={slide.phrase}
+                    className={`absolute inset-0 transition-all duration-700 ease-out ${
+                      index === activeHeroSlide ? "opacity-100 scale-100" : "opacity-0 scale-[1.02]"
+                    }`}
+                    aria-hidden={index !== activeHeroSlide}
+                  >
+                    <Image
+                      src={slide.image}
+                      alt=""
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1024px"
+                      className={`object-cover blur-xl scale-110 ${slide.backdropClass}`}
+                    />
+                    <Image
+                      src={slide.image}
+                      alt={slide.alt}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1024px"
+                      priority={index === 0}
+                      className={slide.imageClass}
+                    />
+                  </div>
+                ))}
 
-            {/* Experiencia */}
-            <div className="inline-flex items-center gap-2 bg-primary/20 text-primary px-4 py-2 rounded-full mb-6">
-              <Zap className="w-4 h-4" />
-              <span className="text-sm font-semibold uppercase tracking-wide">+20 años de experiencia</span>
-            </div>
+                <button
+                  type="button"
+                  aria-label="Ver imagen anterior"
+                  onClick={showPreviousHeroSlide}
+                  className="absolute left-2 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-card/20 bg-foreground/55 text-card shadow-lg backdrop-blur-md transition-colors hover:bg-primary sm:left-4 sm:h-11 sm:w-11"
+                >
+                  <ChevronLeft className="h-6 w-6" />
+                </button>
+                <button
+                  type="button"
+                  aria-label="Ver imagen siguiente"
+                  onClick={showNextHeroSlide}
+                  className="absolute right-2 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-card/20 bg-foreground/55 text-card shadow-lg backdrop-blur-md transition-colors hover:bg-primary sm:right-4 sm:h-11 sm:w-11"
+                >
+                  <ChevronRight className="h-6 w-6" />
+                </button>
+              </div>
 
-            {/* Título principal */}
-            <div>
-              <h1 className="font-serif text-5xl sm:text-6xl lg:text-7xl font-bold text-card leading-none text-balance">
-                Corta <span className="text-primary">la Semana.</span><br />
-                <span className="text-primary">o</span><br />
-                Hace del Sábado <span className="text-primary">tu día Especial.</span>
-              </h1>
-              <p className="mt-6 text-xl text-card/80 leading-relaxed max-w-4xl mx-auto text-center">
-                Dale un Giro a tu vida, Divertite, Hace amigos y Descubrí el Ritmo que llevas dentro… <br /> En un espacio diseñado especialmente para vos, lleno de energía.
-              </p>
-            </div>
-
-            {/* Titulo secundario */}
-            <div className="mt-20">
-              <h2 className="font-extralight text-3xl sm:text-4xl lg:text-5xl text-card/85 leading-none text-balance">
-                Clases de Salsa y Bachata en Córdoba
-              </h2>
-              <p className="mt-6 text-lg text-card/80 leading-relaxed max-w-4xl mx-auto text-center">
-                Para todos los Niveles Para ir solo/a en pareja o con tus amistades.<br /> Conoce todos los Planes y Promos que tenemos para vos!!
-              </p>
+              <div className="mt-4 flex justify-center gap-2" aria-label="Slides del carrusel">
+                {heroSlides.map((slide, index) => (
+                  <button
+                    key={slide.phrase}
+                    type="button"
+                    aria-label={`Ver slide ${index + 1}`}
+                    onClick={() => setActiveHeroSlide(index)}
+                    className={`h-2 rounded-full transition-all duration-500 ${
+                      index === activeHeroSlide ? "w-9 bg-primary" : "w-3 bg-card/45 hover:bg-card/70"
+                    }`}
+                  />
+                ))}
+              </div>
             </div>
 
             {/* Botones */}
@@ -388,10 +475,10 @@ export default function Home() {
                 {/* Main Photo */}
                 <div className="relative h-64 overflow-hidden">
                   <Image
-                    src="/images/studio-main-1.jpg"
+                    src="/images/studio-main-new.png"
                     alt="Studio de baile Vélez Sarsfield"
                     fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 to-transparent" />
                   <div className="absolute bottom-4 left-4">
@@ -811,12 +898,18 @@ export default function Home() {
       <footer className="bg-foreground border-t border-card/10 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
-                <Sparkles className="w-5 h-5 text-primary-foreground" />
+            <a href="#inicio" className="flex items-center gap-3" aria-label="Ir al inicio">
+              <div className="relative h-10 w-10 overflow-hidden rounded-lg bg-black">
+                <Image
+                  src="/images/logo-sec-navbar.png"
+                  alt="Salsa en Córdoba"
+                  fill
+                  sizes="40px"
+                  className="object-contain p-1"
+                />
               </div>
               <span className="font-serif text-xl font-bold text-card">Salsa en Córdoba</span>
-            </div>
+            </a>
 
             <p className="text-card/50 text-sm">© 2026 Salsa en Córdoba. Todos los derechos reservados.</p>
           </div>
