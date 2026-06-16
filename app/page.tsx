@@ -2,26 +2,25 @@
 
 import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
-import { Phone, Instagram, Facebook, Menu, X, Users, Music, Heart, Award, MapPin, Clock, CheckCircle, Sparkles, Zap, House, Watch, ChevronLeft, ChevronRight } from "lucide-react"
+import { Menu, X, Users, Music, Heart, Award, MapPin, Clock, CheckCircle, Sparkles, Zap, House, Watch, ChevronLeft, ChevronRight } from "lucide-react"
+import { FaFacebookF, FaInstagram, FaWhatsapp } from "react-icons/fa"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { WhatsAppWidget } from "@/components/whatsapp-widget"
 
 const scheduleFromZero = [
-  { day: "Martes", location: "Studio – Vélez Sarsfield 520", level: "Multinivel (apto principiantes)", style: "Salsa", time: "21:00 a 22:30" },
-  { day: "Jueves", location: "Studio – Vélez Sarsfield 520", level: "Multinivel (apto principiantes)", style: "Bachata", time: "21:00 a 22:30" },
-  { day: "Sábado", location: "BestClub Gym – Chacabuco 472", level: "Introductorio I (Cero absoluto)", group: "Grupo 1", style: "Salsa & Bachata", time: "15:00 a 16:30" },
-  { day: "Sábado", location: "BestClub Gym – Chacabuco 472", level: "Introductorio II", group: "Grupo 2", style: "Salsa & Bachata", time: "15:00 a 16:30" },
+  { day: "Martes", location: "Studio – Vélez Sársfield 520", style: "ESPECIAL DE SALSA", time: "21:00 a 22:30Hs" },
+  { day: "Jueves", location: "Studio – Vélez Sársfield 520", style: "ESPECIAL DE BACHATA", time: "21:00 a 22:30Hs" },
+  { day: "Sábados", location: "Best Club – Chacabuco 472", style: "SALSA Y MERENGUE", time: "15:00 a 16:30Hs" },
+  { day: "Sábados", location: "Best Club – Chacabuco 472", style: "ESPECIAL DE BACHATA", time: "18:00 a 19:30Hs" },
 ]
 
 const scheduleExperienced = [
-  { day: "Martes", location: "Studio – Vélez Sarsfield 520", level: "Multinivel", style: "Salsa", time: "21:00 a 22:30" },
-  { day: "Jueves", location: "Studio – Vélez Sarsfield 520", level: "Multinivel", style: "Bachata", time: "21:00 a 22:30" },
-  { day: "Sábado", location: "BestClub Gym – Chacabuco 472", level: "Principiantes 1 / 1.5", group: "Grupo 1", style: "Salsa", time: "16:30 a 18:00" },
-  { day: "Sábado", location: "BestClub Gym – Chacabuco 472", level: "Principiantes 2 / Intermedios", group: "Grupo 2", style: "Salsa", time: "16:30 a 18:00" },
-  { day: "Sábado", location: "BestClub Gym – Chacabuco 472", level: "Principiantes 1 / 1.5", group: "Grupo 1", style: "Bachata", time: "18:00 a 19:30" },
-  { day: "Sábado", location: "BestClub Gym – Chacabuco 472", level: "Principiantes 2 / Intermedios", group: "Grupo 2", style: "Bachata", time: "18:00 a 19:30" },
+  { day: "Martes", location: "Studio – Vélez Sársfield 520", style: "ESPECIAL DE SALSA", time: "21:00 a 22:30Hs" },
+  { day: "Jueves", location: "Studio – Vélez Sársfield 520", style: "ESPECIAL DE BACHATA", time: "21:00 a 22:30Hs" },
+  { day: "Sábados", location: "Best Club – Chacabuco 472", style: "ESPECIAL DE SALSA", time: "16:30 a 18:00 Hs" },
+  { day: "Sábados", location: "Best Club – Chacabuco 472", style: "ESPECIAL DE BACHATA", time: "18:00 a 19:30 Hs" },
 ]
 
 const testimonials = [
@@ -33,6 +32,9 @@ const testimonials = [
 const WHATSAPP_NUMBER = "5493513715379"
 
 const whatsappLink = (message: string) => `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`
+
+const sectionTitleClass = "bg-gradient-to-r from-amber-300 via-yellow-500 to-amber-700 bg-clip-text text-transparent drop-shadow-[0_2px_14px_rgba(251,191,36,0.22)]"
+const sectionLeadClass = "mt-4 font-[Arial] text-xl sm:text-2xl leading-relaxed"
 
 const heroSlides = [
   {
@@ -53,15 +55,15 @@ const heroSlides = [
     phrase: "¡Hacé amigos y divertite!",
     image: "/images/hero-carousel-3-amigos.png",
     alt: "Grupo de alumnos bailando salsa",
-    imageClass: "object-contain sm:object-cover sm:object-center lg:object-contain",
-    backdropClass: "opacity-30 lg:opacity-25",
+    imageClass: "object-cover object-center sm:object-contain",
+    backdropClass: "opacity-25",
   },
   {
     phrase: "Dale un giro a tu vida.",
     image: "/images/hero-carousel-4-giro.png",
     alt: "Grupo de alumnos de Salsa en Córdoba",
-    imageClass: "object-contain sm:object-cover sm:object-center lg:object-contain",
-    backdropClass: "opacity-30 lg:opacity-25",
+    imageClass: "object-cover object-center sm:object-contain",
+    backdropClass: "opacity-25",
   },
   {
     phrase: "Promo universitarios.",
@@ -175,29 +177,29 @@ export default function Home() {
       )}
 
       {/* Header */}
-      <header className="fixed top-0 left-0 right-0 z-50 bg-foreground/95 backdrop-blur-sm border-b border-card/10">
+      <header className="fixed top-0 left-0 right-0 z-50 bg-[#5f100f]/95 backdrop-blur-sm border-b border-red-950/50 shadow-lg shadow-black/20 font-[Arial]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-[1fr_2.5rem] items-center gap-3 h-16 lg:h-20 lg:grid-cols-[auto_1fr_auto] lg:gap-4">
-            <a href="#inicio" className="flex min-w-0 items-center gap-3" aria-label="Ir al inicio">
-              <div className="relative h-11 w-11 flex-shrink-0 overflow-hidden rounded-lg bg-black">
+          <div className="grid grid-cols-[1fr_2.5rem] items-center gap-3 h-16 lg:h-20 lg:grid-cols-[auto_auto_1fr] lg:gap-8">
+            <a href="#inicio" className="flex min-w-0 items-center" aria-label="Ir al inicio">
+              <div className="relative h-14 w-24 flex-shrink-0 overflow-visible lg:h-[4.5rem] lg:w-32">
                 <Image
-                  src="/images/logo-sec-navbar.png"
-                  alt="Salsa en CÃ³rdoba"
+                  src="/images/logo-navbar-test.png"
+                  alt="Salsa en Córdoba"
                   fill
-                  sizes="44px"
-                  className="object-contain p-1"
+                  sizes="(min-width: 1024px) 128px, 96px"
+                  className="object-contain"
                   priority
                 />
               </div>
-              <span className="font-serif text-2xl font-bold text-card">Salsa en Córdoba</span>
+              <span className="sr-only">Salsa en Córdoba</span>
             </a>
 
-            <nav className="hidden lg:flex items-center justify-center gap-6 xl:gap-8">
+            <nav className="hidden lg:flex items-center justify-start gap-5 xl:gap-6">
               {navItems.map((item) => (
                 <a
                   key={item.name}
                   href={item.href}
-                  className="text-center text-sm font-semibold text-card/70 hover:text-primary transition-colors uppercase tracking-wide"
+                  className="text-center text-sm font-semibold text-card/80 hover:text-primary transition-colors uppercase tracking-wide"
                 >
                   {item.name}
                 </a>
@@ -205,8 +207,8 @@ export default function Home() {
             </nav>
 
             <div className="flex items-center justify-self-end gap-4">
-              <Button className="hidden lg:flex bg-primary hover:bg-primary/90 text-primary-foreground gap-2 rounded-full px-6">
-                <Phone className="w-4 h-4" />
+              <Button className="hidden lg:flex bg-primary hover:bg-primary/90 text-primary-foreground gap-2 rounded-full px-6 shadow-sm">
+                <FaWhatsapp className="w-4 h-4" />
                 <a
                   href={whatsappLink("Hola! Quiero consultar por las clases de salsa y bachata.")}
                   target="_blank"
@@ -230,20 +232,20 @@ export default function Home() {
 
         {/* Mobile menu */}
         {mobileMenuOpen && (
-          <div id="mobile-menu" className="lg:hidden bg-foreground border-t border-card/10">
+          <div id="mobile-menu" className="lg:hidden bg-[#5f100f] border-t border-red-950/50 shadow-xl">
             <div className="px-4 py-4 space-y-3">
               {navItems.map((item) => (
                 <a
                   key={item.name}
                   href={item.href}
-                  className="block py-2 text-card hover:text-primary transition-colors uppercase tracking-wide text-sm font-semibold"
+                  className="block py-2 text-card/90 hover:text-primary transition-colors uppercase tracking-wide text-sm font-semibold"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   {item.name}
                 </a>
               ))}
-              <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground gap-2 rounded-full mt-4">
-                <Phone className="w-4 h-4" />
+              <Button className="w-full bg-primary hover:bg-primary/90 text-primary-foreground gap-2 rounded-full mt-4 shadow-sm">
+                <FaWhatsapp className="w-4 h-4" />
                 <a
                   href={whatsappLink("Hola, quiero consultar por las clases de salsa y bachata.")}
                   target="_blank"
@@ -265,14 +267,15 @@ export default function Home() {
             style={{ transform: "translate3d(0, var(--hero-parallax, 0px), 0) scale(1.1)" }}
           >
             <Image
-              src="/images/fondo-hero3.png"
-              alt="Pareja bailando salsa"
+              src="/images/background-hero.png"
+              alt=""
               fill
-              className="object-cover"
+              className="object-cover object-center"
               priority
             />
           </div>
-          <div className="absolute inset-0 bg-foreground/70" />
+          <div className="absolute inset-0 bg-foreground/58" />
+          <div className="absolute inset-0 bg-gradient-to-b from-foreground/35 via-transparent to-foreground/50" />
         </div>
 
         {/* Decorative elements */}
@@ -286,9 +289,8 @@ export default function Home() {
                 {heroSlides.map((slide, index) => (
                   <div
                     key={slide.phrase}
-                    className={`absolute inset-0 transition-all duration-700 ease-out ${
-                      index === activeHeroSlide ? "opacity-100 scale-100" : "opacity-0 scale-[1.02]"
-                    }`}
+                    className={`absolute inset-0 transition-all duration-700 ease-out ${index === activeHeroSlide ? "opacity-100 scale-100" : "opacity-0 scale-[1.02]"
+                      }`}
                     aria-hidden={index !== activeHeroSlide}
                   >
                     <Image
@@ -334,9 +336,8 @@ export default function Home() {
                     type="button"
                     aria-label={`Ver slide ${index + 1}`}
                     onClick={() => setActiveHeroSlide(index)}
-                    className={`h-2 rounded-full transition-all duration-500 ${
-                      index === activeHeroSlide ? "w-9 bg-primary" : "w-3 bg-card/45 hover:bg-card/70"
-                    }`}
+                    className={`h-2 rounded-full transition-all duration-500 ${index === activeHeroSlide ? "w-9 bg-primary" : "w-3 bg-card/45 hover:bg-card/70"
+                      }`}
                   />
                 ))}
               </div>
@@ -344,8 +345,8 @@ export default function Home() {
 
             {/* Botones */}
             <div className="mt-10 flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2 rounded-full text-lg px-8 py-6">
-                <Phone className="w-5 h-5" />
+              <Button size="lg" className="bg-[#1FA855] hover:bg-[#188C47] text-white gap-2 rounded-full text-lg px-8 py-6 shadow-lg shadow-emerald-950/25">
+                <FaWhatsapp className="w-5 h-5" />
                 <a
                   href={whatsappLink("Hola! Vi la página de salsa y bachata en Córdoba y quiero empezar a bailar. ¿Me pasás mas info?")}
                   target="_blank"
@@ -354,7 +355,7 @@ export default function Home() {
                   Consultar por WhatsApp
                 </a>
               </Button>
-              <Button size="lg" variant="outline" className="border-2 border-card text-card hover:bg-card hover:text-foreground gap-2 rounded-full text-lg px-8 py-6 bg-transparent">
+              <Button asChild size="lg" variant="outline" className="border-2 border-card text-card hover:bg-card hover:text-foreground gap-2 rounded-full text-lg px-8 py-6 bg-transparent">
                 <a href="#horarios">Ver horarios</a>
               </Button>
             </div>
@@ -380,7 +381,7 @@ export default function Home() {
       </section>
 
       {/* ¿Por qué aprender salsa y bachata? */}
-      <section id="por-que" className="py-20 lg:py-28 bg-foreground relative overflow-hidden">
+      {/* <section id="por-que" className="py-20 lg:py-28 bg-foreground relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_30%,rgba(185,28,28,0.15),transparent_50%)]" />
         <div className="absolute top-10 left-10 w-32 h-32 border-4 border-primary/20 rounded-full animate-pulse hidden lg:block" />
         <div className="absolute bottom-10 right-10 w-24 h-24 bg-primary/20 rounded-full blur-xl hidden lg:block" />
@@ -450,19 +451,27 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Nuestras Sedes */}
-      <section id="sedes" className="py-20 lg:py-28 bg-foreground relative">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_50%,rgba(185,28,28,0.15),transparent_50%)]" />
+      <section id="sedes" className="py-20 lg:py-28 bg-foreground relative overflow-hidden">
+        <Image
+          src="/images/background-sedes.png"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-foreground/60" />
+        <div className="absolute inset-0 bg-gradient-to-b from-foreground/30 via-transparent to-foreground/55" />
         <div className="absolute top-20 right-20 w-40 h-40 border-4 border-primary/20 rounded-full hidden lg:block" />
         <div className="absolute bottom-20 left-20 w-24 h-24 bg-primary/10 rounded-full blur-xl hidden lg:block" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-primary font-semibold uppercase tracking-wider text-sm">Ubicaciones</span>
-            <h2 className="font-serif text-4xl sm:text-5xl font-bold text-card mt-2">Nuestras Sedes</h2>
-            <p className="mt-4 text-card/70 leading-relaxed text-lg">
+            <h2 className={`font-serif text-4xl sm:text-5xl font-bold mt-2 ${sectionTitleClass}`}>Nuestras Sedes</h2>
+            <p className={`${sectionLeadClass} text-card/75`}>
               Elegí la sede que mejor se adapte a tus tiempos y a tu rutina. <br /> Conoce donde se viven nuestras clases.
             </p>
           </div>
@@ -475,7 +484,7 @@ export default function Home() {
                 {/* Main Photo */}
                 <div className="relative h-64 overflow-hidden">
                   <Image
-                    src="/images/studio-main-new.png"
+                    src="/images/img-sucursales/studio-main.png"
                     alt="Studio de baile Vélez Sarsfield"
                     fill
                     className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
@@ -492,7 +501,7 @@ export default function Home() {
                 <div className="grid grid-cols-2 gap-2 p-2">
                   <div className="relative h-32 rounded-xl overflow-hidden">
                     <Image
-                      src="/images/studio-detail-1.jpg"
+                      src="/images/img-sucursales/studio-detail-1.png"
                       alt="Detalles del studio"
                       fill
                       className="object-cover hover:scale-105 transition-transform duration-300"
@@ -500,7 +509,7 @@ export default function Home() {
                   </div>
                   <div className="relative h-32 rounded-xl overflow-hidden">
                     <Image
-                      src="/images/studio-detail-2.jpg"
+                      src="/images/img-sucursales/studio-detail-2.png"
                       alt="Clase en el studio"
                       fill
                       className="object-cover hover:scale-105 transition-transform duration-300"
@@ -531,7 +540,7 @@ export default function Home() {
                       <MapPin className="w-6 h-6 text-primary-foreground" />
                     </div>
                     <div>
-                      <h3 className="font-serif text-xl font-bold text-card leading-tight">Av. Vélez Sarsfield 520</h3>
+                      <h3 className="font-serif text-2xl sm:text-3xl font-bold text-card leading-tight">Av. Vélez Sarsfield 520</h3>
                     </div>
                   </div>
                 </div>
@@ -545,7 +554,7 @@ export default function Home() {
                 {/* Main Photo */}
                 <div className="relative h-64 overflow-hidden">
                   <Image
-                    src="/images/studio-main-2.jpg"
+                    src="/images/img-sucursales/best-main.png"
                     alt="Studio de baile Best Club"
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
@@ -562,7 +571,7 @@ export default function Home() {
                 <div className="grid grid-cols-2 gap-2 p-2">
                   <div className="relative h-32 rounded-xl overflow-hidden">
                     <Image
-                      src="/images/studio-detail-3.jpg"
+                      src="/images/img-sucursales/best-detail-1.png"
                       alt="Comunidad de baile"
                       fill
                       className="object-cover hover:scale-105 transition-transform duration-300"
@@ -570,7 +579,7 @@ export default function Home() {
                   </div>
                   <div className="relative h-32 rounded-xl overflow-hidden">
                     <Image
-                      src="/images/studio-detail-4.jpg"
+                      src="/images/img-sucursales/best-detail-2.png"
                       alt="Pareja bailando"
                       fill
                       className="object-cover hover:scale-105 transition-transform duration-300"
@@ -601,7 +610,7 @@ export default function Home() {
                       <MapPin className="w-6 h-6 text-accent-foreground" />
                     </div>
                     <div>
-                      <h3 className="font-serif text-xl font-bold text-card leading-tight">Bv. Chacabuco 472</h3>
+                      <h3 className="font-serif text-2xl sm:text-3xl font-bold text-card leading-tight">Bv. Chacabuco 472</h3>
                     </div>
                   </div>
                 </div>
@@ -611,99 +620,142 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Niveles y Horarios - Detailed structure from Version 1 with Version 2 styling */}
-      <section id="horarios" className="py-20 lg:py-28 bg-card text-foreground">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-16">
+      {/* Niveles y Horarios */}
+      <section id="horarios" className="py-20 lg:py-28 bg-foreground text-card relative overflow-hidden font-[Arial]">
+        <Image
+          src="/images/background-horarios.png"
+          alt=""
+          fill
+          sizes="100vw"
+          className="object-cover object-center"
+        />
+        <div className="absolute inset-0 bg-foreground/56" />
+        <div className="absolute inset-0 bg-gradient-to-b from-foreground/30 via-transparent to-foreground/55" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <div className="text-center max-w-3xl mx-auto mb-12 lg:mb-16">
             <span className="text-primary font-semibold uppercase tracking-wider text-sm">Encontrá tu horario</span>
-            <h2 className="font-serif text-4xl sm:text-5xl font-bold text-foreground mt-2">Niveles y Horarios</h2>
-            <p className="mt-4 text-muted-foreground leading-relaxed">
+            <h2 className={`font-serif text-4xl sm:text-5xl font-bold mt-2 ${sectionTitleClass}`}>Niveles y Horarios</h2>
+            <p className={`${sectionLeadClass} text-card/80`}>
               Encontrá el horario y nivel que mejor se adapte a vos.
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-8">
-            {/* Desde Cero */}
-            <div className="relative">
-              <div className="absolute -inset-1 bg-gradient-to-r from-primary to-orange-500 rounded-3xl blur-sm opacity-30" />
-              <div className="relative bg-card rounded-2xl p-6 lg:p-8 border border-primary/20">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-14 h-14 bg-primary rounded-xl flex items-center justify-center -rotate-3">
-                    <Sparkles className="w-7 h-7 text-primary-foreground" />
-                  </div>
-                  <div>
-                    <h3 className="font-serif text-2xl font-bold text-foreground">Desde Cero</h3>
-                    <p className="text-muted-foreground">Primera vez bailando</p>
-                  </div>
-                </div>
-                <p className="text-muted-foreground mb-6 text-sm">Ideal si nunca bailaste. Clases pensadas para acompañarte paso a paso.</p>
+          <div className="grid gap-8 lg:grid-cols-2">
+            {[
+              {
+                title: "Desde Cero",
+                subtitle: "Primera vez bailando",
+                levelLabel: "NIVELES:",
+                levels: "Intro 1 (Desde cero) | Intro 2 (Básico / Otros ritmos)",
+                items: scheduleFromZero,
+                Icon: Sparkles,
+                glow: "from-primary/60 via-fuchsia-500/30 to-yellow-300/60",
+                icon: "bg-primary text-primary-foreground",
+              },
+              {
+                title: "Ya Bailo",
+                subtitle: "Con experiencia previa",
+                levelLabel: "Niveles:",
+                levels: "Principiantes, Principiantes Avanzados e Intermedios",
+                items: scheduleExperienced,
+                Icon: Zap,
+                glow: "from-fuchsia-500/55 via-primary/35 to-yellow-300/60",
+                icon: "bg-accent text-accent-foreground",
+              },
+            ].map((card) => {
+              const Icon = card.Icon
 
-                <div className="space-y-4">
-                  {scheduleFromZero.map((item, idx) => (
-                    <div key={idx} className="p-4 bg-secondary rounded-xl hover:bg-primary/5 transition-colors">
-                      <div className="flex flex-col gap-2">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <Clock className="w-4 h-4 text-primary" />
-                            <span className="font-bold text-foreground">{item.day}</span>
+              return (
+                <div key={card.title} className="relative">
+                  <div className={`absolute -inset-1 rounded-[2rem] bg-gradient-to-r ${card.glow} blur-lg opacity-70`} />
+                  <div className="relative overflow-hidden rounded-[1.75rem] border border-fuchsia-300/35 bg-slate-950/72 p-4 shadow-2xl shadow-black/40 backdrop-blur-md sm:p-6">
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/8 via-transparent to-primary/10" />
+                    <div className="relative">
+                      <div className="rounded-3xl border border-fuchsia-300/60 bg-slate-950/70 p-4 shadow-[0_0_28px_rgba(217,70,239,0.22)] sm:p-5">
+                        <div className="flex items-center gap-4">
+                          <div className={`flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full ${card.icon} ring-2 ring-yellow-300/70 shadow-[0_0_22px_rgba(250,204,21,0.35)]`}>
+                            <Icon className="h-8 w-8" />
                           </div>
-                          <span className="text-sm font-bold text-primary bg-primary/10 px-3 py-1 rounded-full">{item.time}</span>
-                        </div>
-                        <div className="space-y-1">
-                          <p className="font-medium text-foreground">{item.style}</p>
-                          <p className="text-sm text-muted-foreground">{item.level}</p>
-                          <p className="font-medium text-muted-foreground flex items-center gap-1">
-                            <MapPin className="w-3 h-3" />
-                            {item.location}
-                          </p>
+                          <div>
+                            <h3 className="text-3xl font-black leading-tight text-card sm:text-4xl">{card.title}</h3>
+                            <p className="text-base font-medium text-card/85 sm:text-lg">{card.subtitle}</p>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
 
-            {/* Ya Bailo */}
-            <div className="relative">
-              <div className="absolute -inset-1 bg-gradient-to-r from-orange-500 to-red-600 rounded-3xl blur-sm opacity-30" />
-              <div className="relative bg-card rounded-2xl p-6 lg:p-8 border border-accent/20">
-                <div className="flex items-center gap-4 mb-4">
-                  <div className="w-14 h-14 bg-accent rounded-xl flex items-center justify-center rotate-3">
-                    <Zap className="w-7 h-7 text-accent-foreground" />
-                  </div>
-                  <div>
-                    <h3 className="font-serif text-2xl font-bold text-foreground">Ya Bailo</h3>
-                    <p className="text-muted-foreground">Con experiencia previa</p>
-                  </div>
-                </div>
-                <p className="text-muted-foreground mb-6 text-sm">Para quienes ya tienen experiencia y quieren seguir creciendo.</p>
+                      <div className="mt-5 rounded-xl border border-yellow-300/80 bg-black/45 px-4 py-3 text-sm font-semibold text-card shadow-[0_0_18px_rgba(250,204,21,0.18)] sm:text-base">
+                        <span className="font-black text-yellow-300">{card.levelLabel}</span> {card.levels}
+                      </div>
 
-                <div className="space-y-4">
-                  {scheduleExperienced.map((item, idx) => (
-                    <div key={idx} className="p-4 bg-secondary rounded-xl hover:bg-accent/5 transition-colors">
-                      <div className="flex flex-col gap-2">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <Clock className="w-4 h-4 text-accent" />
-                            <span className="font-bold text-foreground">{item.day}</span>
-                          </div>
-                          <span className="text-sm font-bold text-accent bg-accent/10 px-3 py-1 rounded-full">{item.time}</span>
-                        </div>
-                        <div className="space-y-1">
-                          <p className="font-medium text-foreground">{item.style}</p>
-                          <p className="text-sm text-muted-foreground">{item.level}</p>
-                          <p className="font-medium  text-muted-foreground flex items-center gap-1">
-                            <MapPin className="w-3 h-3" />
-                            {item.location}
-                          </p>
-                        </div>
+                      <div className="mt-7 space-y-7">
+                        {[
+                          { key: "Studio", name: "STUDIO", address: "Vélez Sársfield 520" },
+                          { key: "Best Club", name: "BEST CLUB", address: "Chacabuco 472" },
+                        ].map((place) => {
+                          const locationItems = card.items.filter((item) => item.location.includes(place.key))
+
+                          if (locationItems.length === 0) return null
+
+                          return (
+                            <div key={`${card.title}-${place.key}`} className="space-y-3">
+                              <div className="flex items-center gap-3">
+                                <MapPin className="h-7 w-7 flex-shrink-0 text-yellow-300" />
+                                <h4 className="text-2xl font-black uppercase tracking-wide text-card">
+                                  {place.name} <span className="text-lg font-medium normal-case text-card/80">- {place.address}</span>
+                                </h4>
+                              </div>
+
+                              <div className="space-y-3">
+                                {locationItems.map((item) => {
+                                  const isStudio = place.key === "Studio"
+
+                                  return (
+                                    <div
+                                      key={`${card.title}-${item.day}-${item.style}-${item.time}`}
+                                      className={`relative overflow-hidden rounded-2xl border p-4 text-slate-950 shadow-xl ${
+                                        isStudio
+                                          ? "border-yellow-100/80 bg-gradient-to-r from-yellow-200 via-amber-300 to-orange-400"
+                                          : "border-sky-100/80 bg-gradient-to-r from-fuchsia-300 via-violet-300 to-sky-300"
+                                      }`}
+                                    >
+                                      <div className="flex items-center gap-4">
+                                        <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-xl border-2 border-slate-950/80 bg-white/45 shadow-md">
+                                          <Music className="h-7 w-7" />
+                                        </div>
+                                        <div className="min-w-0 flex-1">
+                                          <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                                            <p className="text-2xl font-bold leading-tight sm:text-[1.625rem]">{item.day}</p>
+                                            <span className="inline-flex items-center gap-1 text-2xl font-semibold sm:text-[1.625rem]">
+                                              <Clock className="h-6 w-6" />
+                                              {item.time}
+                                            </span>
+                                          </div>
+                                          <p className="mt-1 text-[1.625rem] font-black uppercase leading-tight sm:text-[1.75rem]">
+                                            {item.style}
+                                          </p>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  )
+                                })}
+                              </div>
+                            </div>
+                          )
+                        })}
                       </div>
                     </div>
-                  ))}
+                  </div>
                 </div>
-              </div>
-            </div>
+              )
+            })}
+          </div>
+          <div className="mt-10 flex flex-wrap items-center justify-center gap-3 text-center text-lg font-black uppercase tracking-[0.28em] text-yellow-300 sm:text-2xl">
+            <span>BAILÁ</span>
+            <span className="text-card/80">✦</span>
+            <span>DISFRUTÁ</span>
+            <span className="text-card/80">✦</span>
+            <span>CONECTÁ</span>
           </div>
         </div>
       </section>
@@ -723,10 +775,10 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="max-w-2xl">
             <span className="text-primary font-semibold uppercase tracking-wider text-sm">Filosofía</span>
-            <h2 className="font-serif text-4xl sm:text-5xl font-bold text-card mt-2 mb-6">
+            <h2 className={`font-serif text-4xl sm:text-5xl font-bold mt-2 mb-6 ${sectionTitleClass}`}>
               Nuestra Cultura
             </h2>
-            <p className="text-card/70 leading-relaxed text-lg mb-8">
+            <p className={`${sectionLeadClass} text-card/75 mb-8`}>
               En Salsa en Córdoba creemos que bailar es mucho más que aprender pasos. Es un espacio para
               desconectar, conectar con otros y sentirte bien. Sin presiones, sin exigencias, solo buena energía.
             </p>
@@ -770,7 +822,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-primary font-semibold uppercase tracking-wider text-sm">Testimonios</span>
-            <h2 className="font-serif text-4xl sm:text-5xl font-bold text-foreground mt-2">Lo que dicen nuestros alumnos</h2>
+            <h2 className={`font-serif text-4xl sm:text-5xl font-bold mt-2 ${sectionTitleClass}`}>Lo que dicen nuestros alumnos</h2>
           </div>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -811,10 +863,10 @@ export default function Home() {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <span className="text-primary font-semibold uppercase tracking-wider text-sm">Contacto</span>
-              <h2 className="font-serif text-4xl sm:text-5xl font-bold text-card mt-2 mb-6">
+              <h2 className={`font-serif text-4xl sm:text-5xl font-bold mt-2 mb-6 ${sectionTitleClass}`}>
                 ¿Querés empezar a bailar?
               </h2>
-              <p className="text-card/70 leading-relaxed text-lg mb-8">
+              <p className={`${sectionLeadClass} text-card/75 mb-8`}>
                 Dejanos tu consulta y te asesoramos según tu nivel y disponibilidad. También podés visitar nuestro perfil de Instagram y Facebook.
               </p>
 
@@ -824,9 +876,9 @@ export default function Home() {
                   href="https://www.instagram.com/salsa.en.cordoba?igsh=MW5ua2NjdDN4a21lOA=="
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-12 h-12 bg-card/10 rounded-full flex items-center justify-center hover:bg-primary text-card hover:text-primary-foreground transition-colors"
+                  className="w-14 h-14 sm:w-16 sm:h-16 bg-white rounded-full flex items-center justify-center text-pink-500 shadow-lg shadow-black/20 transition-transform hover:scale-105"
                 >
-                  <Instagram className="w-6 h-6" />
+                  <FaInstagram className="w-8 h-8 sm:w-9 sm:h-9" />
                 </a>
 
                 <a
@@ -834,9 +886,9 @@ export default function Home() {
                   href="https://www.facebook.com/Salsa.en.Cordoba1?rdid=hd1RaF0Wfv1ZMEWc&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F18Hpq3zRsX%2F#"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-12 h-12 bg-card/10 rounded-full flex items-center justify-center hover:bg-primary text-card hover:text-primary-foreground transition-colors"
+                  className="w-14 h-14 sm:w-16 sm:h-16 bg-white rounded-full flex items-center justify-center text-blue-600 shadow-lg shadow-black/20 transition-transform hover:scale-105"
                 >
-                  <Facebook className="w-6 h-6" />
+                  <FaFacebookF className="w-7 h-7 sm:w-8 sm:h-8" />
                 </a>
               </div>
             </div>
@@ -898,17 +950,17 @@ export default function Home() {
       <footer className="bg-foreground border-t border-card/10 py-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
-            <a href="#inicio" className="flex items-center gap-3" aria-label="Ir al inicio">
-              <div className="relative h-10 w-10 overflow-hidden rounded-lg bg-black">
+            <a href="#inicio" className="flex items-center" aria-label="Ir al inicio">
+              <div className="relative h-20 w-40 overflow-hidden sm:h-24 sm:w-48">
                 <Image
-                  src="/images/logo-sec-navbar.png"
+                  src="/images/logo-navbar-test.png"
                   alt="Salsa en Córdoba"
                   fill
-                  sizes="40px"
-                  className="object-contain p-1"
+                  sizes="(min-width: 640px) 192px, 160px"
+                  className="object-contain"
                 />
               </div>
-              <span className="font-serif text-xl font-bold text-card">Salsa en Córdoba</span>
+              <span className="sr-only">Salsa en Córdoba</span>
             </a>
 
             <p className="text-card/50 text-sm">© 2026 Salsa en Córdoba. Todos los derechos reservados.</p>

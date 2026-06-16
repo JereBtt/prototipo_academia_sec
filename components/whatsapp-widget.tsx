@@ -64,12 +64,12 @@ export function WhatsAppWidget() {
       <div className="fixed bottom-4 right-4 z-50 font-sans flex flex-col items-end gap-3 sm:bottom-6 sm:right-6">
         {state === 'info' && (
           <div
-            className="w-80 max-w-[calc(100vw-2rem)] bg-white rounded-2xl overflow-hidden"
+            className="w-80 max-w-[calc(100vw-2rem)] bg-white rounded-2xl overflow-hidden lg:w-96"
             style={{ boxShadow: '0 8px 40px rgba(0,0,0,0.18)' }}
           >
             <div className="bg-[#8B1A1A] px-5 py-4 flex items-start justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full flex-shrink-0 overflow-hidden border-2 border-white/20">
+                <div className="w-10 h-10 rounded-full flex-shrink-0 overflow-hidden border-2 border-white/20 lg:h-12 lg:w-12">
                   <Image
                     src="/images/avatar-profe.jpg"
                     alt="Profesor de salsa"
@@ -96,7 +96,7 @@ export function WhatsAppWidget() {
             </div>
 
             <div className="px-5 py-5">
-              <p className="text-sm text-gray-600 leading-relaxed mb-5">
+              <p className="text-sm text-gray-600 leading-relaxed mb-5 lg:text-base">
                 Consultanos por clases de salsa y bachata y te ayudamos a encontrar el nivel y horario ideal para vos.
               </p>
 
@@ -105,9 +105,9 @@ export function WhatsAppWidget() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={handleClose}
-                className="w-full bg-[#25D366] hover:bg-[#20ba5c] text-white font-semibold py-3.5 rounded-xl transition-colors flex items-center justify-center gap-2 px-4 text-sm"
+                className="w-full bg-[#25D366] hover:bg-[#20ba5c] text-white font-semibold py-3.5 rounded-xl transition-colors flex items-center justify-center gap-2 px-4 text-sm lg:py-4 lg:text-base"
               >
-                <FaWhatsapp className="w-5 h-5 text-white" />
+                <FaWhatsapp className="w-5 h-5 text-white lg:h-6 lg:w-6" />
                 <span>Contactanos por WhatsApp</span>
               </a>
             </div>
@@ -116,20 +116,20 @@ export function WhatsAppWidget() {
 
         <div className="flex items-center gap-2 self-end">
           {state === 'collapsed' && (
-            <span className="bg-white text-[#8B1A1A] text-sm font-semibold px-4 py-2 rounded-full shadow-md border border-red-100 whitespace-nowrap">
+            <span className="bg-white text-[#8B1A1A] text-sm font-semibold px-4 py-2 rounded-full shadow-md border border-red-100 whitespace-nowrap lg:px-5 lg:py-2.5 lg:text-base">
               Contactanos
             </span>
           )}
           <button
             onClick={handleToggle}
-            className="w-16 h-16 bg-[#25D366] hover:bg-[#20ba5c] rounded-full flex items-center justify-center shadow-xl transition-all duration-200 hover:scale-105 active:scale-95 flex-shrink-0 text-white"
+            className="w-16 h-16 bg-[#25D366] hover:bg-[#20ba5c] rounded-full flex items-center justify-center shadow-xl transition-all duration-200 hover:scale-105 active:scale-95 flex-shrink-0 text-white lg:h-20 lg:w-20"
             style={state === 'collapsed' ? { animation: 'whatsapp-alarm 0.82s ease-in-out infinite' } : undefined}
             aria-label={state === 'collapsed' ? 'Abrir contacto' : 'Cerrar contacto'}
           >
             {state === 'collapsed' ? (
-              <FaWhatsapp className="w-8 h-8 text-white" />
+              <FaWhatsapp className="w-8 h-8 text-white lg:h-10 lg:w-10" />
             ) : (
-              <X className="w-7 h-7 text-white" />
+              <X className="w-7 h-7 text-white lg:h-9 lg:w-9" />
             )}
           </button>
         </div>
