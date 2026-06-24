@@ -36,6 +36,22 @@ const whatsappLink = (message: string) => `https://wa.me/${WHATSAPP_NUMBER}?text
 const sectionTitleClass = "bg-gradient-to-r from-amber-300 via-yellow-500 to-amber-700 bg-clip-text text-transparent drop-shadow-[0_2px_14px_rgba(251,191,36,0.22)]"
 const sectionLeadClass = "mt-4 font-[Arial] text-xl sm:text-2xl leading-relaxed"
 
+function GoldenSectionDivider() {
+  return (
+    <div aria-hidden="true" className="relative z-30 -my-5 flex h-10 items-center justify-center overflow-hidden px-6 pointer-events-none sm:h-12 sm:px-10">
+      <div className="relative h-8 w-full max-w-md sm:max-w-xl">
+        <Image
+          src="/images/golden-section-divider.webp"
+          alt=""
+          fill
+          sizes="(max-width: 640px) 90vw, 576px"
+          className="object-cover object-center opacity-90"
+        />
+      </div>
+    </div>
+  )
+}
+
 const heroSlides = [
   {
     phrase: "Salsa y Bachata.",
@@ -82,7 +98,6 @@ export default function Home() {
 
   const navItems = [
     { name: "Inicio", href: "#inicio" },
-    { name: "Por qué bailar", href: "#por-que" },
     { name: "Sedes", href: "#sedes" },
     { name: "Niveles y Horarios", href: "#horarios" },
     { name: "Nuestra Cultura", href: "#cultura" },
@@ -179,14 +194,14 @@ export default function Home() {
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 bg-[#5f100f]/95 backdrop-blur-sm border-b border-red-950/50 shadow-lg shadow-black/20 font-[Arial]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-[1fr_2.5rem] items-center gap-3 h-16 lg:h-20 lg:grid-cols-[auto_auto_1fr] lg:gap-8">
-            <a href="#inicio" className="flex min-w-0 items-center" aria-label="Ir al inicio">
-              <div className="relative h-14 w-24 flex-shrink-0 overflow-visible lg:h-[4.5rem] lg:w-32">
+          <div className="grid h-16 grid-cols-[1fr_2.5rem] items-center gap-3 lg:h-20 lg:grid-cols-[11rem_1fr_11rem] lg:gap-4">
+            <a href="#inicio" className="relative z-20 h-16 w-32 self-stretch overflow-visible lg:h-20 lg:w-44" aria-label="Ir al inicio">
+              <div className="absolute left-0 top-0 h-24 w-32 overflow-visible drop-shadow-[0_8px_10px_rgba(0,0,0,0.45)] lg:h-32 lg:w-44">
                 <Image
                   src="/images/logo-navbar-test.png"
                   alt="Salsa en Córdoba"
                   fill
-                  sizes="(min-width: 1024px) 128px, 96px"
+                  sizes="(min-width: 1024px) 176px, 128px"
                   className="object-contain"
                   priority
                 />
@@ -194,7 +209,7 @@ export default function Home() {
               <span className="sr-only">Salsa en Córdoba</span>
             </a>
 
-            <nav className="hidden lg:flex items-center justify-start gap-5 xl:gap-6">
+            <nav className="hidden h-full items-center justify-center gap-6 self-center lg:flex xl:gap-8">
               {navItems.map((item) => (
                 <a
                   key={item.name}
@@ -206,7 +221,7 @@ export default function Home() {
               ))}
             </nav>
 
-            <div className="flex items-center justify-self-end gap-4">
+            <div className="flex items-center justify-self-end self-center gap-4">
               <Button className="hidden lg:flex bg-primary hover:bg-primary/90 text-primary-foreground gap-2 rounded-full px-6 shadow-sm">
                 <FaWhatsapp className="w-4 h-4" />
                 <a
@@ -218,7 +233,7 @@ export default function Home() {
                 </a>
               </Button>
               <button
-                className="justify-self-end p-2 text-card lg:hidden"
+                className="self-center justify-self-end p-2 text-card lg:hidden"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
                 aria-expanded={mobileMenuOpen}
                 aria-controls="mobile-menu"
@@ -260,7 +275,7 @@ export default function Home() {
       </header>
 
       {/* Hero Section */}
-      <section ref={heroRef} id="inicio" className="relative min-h-screen flex items-center overflow-hidden pt-16 lg:pt-20">
+      <section ref={heroRef} id="inicio" className="relative min-h-screen flex items-center overflow-hidden pt-24 lg:pt-32 font-[Arial]">
         <div className="absolute inset-0">
           <div
             className="absolute -inset-y-28 inset-x-0 will-change-transform"
@@ -344,7 +359,7 @@ export default function Home() {
             </div>
 
             {/* Botones */}
-            <div className="mt-10 flex flex-col sm:flex-row gap-4">
+            <div className="mt-4 flex flex-col gap-4 sm:mt-10 sm:flex-row">
               <Button size="lg" className="bg-[#1FA855] hover:bg-[#188C47] text-white gap-2 rounded-full text-lg px-8 py-6 shadow-lg shadow-emerald-950/25">
                 <FaWhatsapp className="w-5 h-5" />
                 <a
@@ -361,10 +376,9 @@ export default function Home() {
             </div>
 
             {/* Características */}
-            <div className="mt-12 flex flex-wrap gap-6">
+            <div className="mt-24 flex flex-wrap gap-6 sm:mt-12">
               {[
                 { icon: House, text: "2 de los Salones más Grandes de Córdoba" },
-                { icon: Users, text: "Multinivel" },
                 { icon: Heart, text: "Ambiente único" },
                 { icon: Award, text: "4+ profes" },
                 { icon: Music, text: "Desde Cero y Todos los Niveles" },
@@ -379,6 +393,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <GoldenSectionDivider />
 
       {/* ¿Por qué aprender salsa y bachata? */}
       {/* <section id="por-que" className="py-20 lg:py-28 bg-foreground relative overflow-hidden">
@@ -454,7 +470,7 @@ export default function Home() {
       </section> */}
 
       {/* Nuestras Sedes */}
-      <section id="sedes" className="py-20 lg:py-28 bg-foreground relative overflow-hidden">
+      <section id="sedes" className="scroll-mt-28 py-14 lg:scroll-mt-36 lg:py-20 bg-foreground relative overflow-hidden">
         <Image
           src="/images/background-sedes.png"
           alt=""
@@ -620,8 +636,10 @@ export default function Home() {
         </div>
       </section>
 
+      <GoldenSectionDivider />
+
       {/* Niveles y Horarios */}
-      <section id="horarios" className="py-20 lg:py-28 bg-foreground text-card relative overflow-hidden font-[Arial]">
+      <section id="horarios" className="scroll-mt-28 py-14 lg:scroll-mt-36 lg:py-20 bg-foreground text-card relative overflow-hidden font-[Arial]">
         <Image
           src="/images/background-horarios.png"
           alt=""
@@ -646,7 +664,7 @@ export default function Home() {
               {
                 title: "Desde Cero",
                 subtitle: "Primera vez bailando",
-                levelLabel: "NIVELES:",
+                levelLabel: "Niveles:",
                 levels: "Intro 1 (Desde cero) | Intro 2 (Básico / Otros ritmos)",
                 items: scheduleFromZero,
                 Icon: Sparkles,
@@ -709,29 +727,38 @@ export default function Home() {
                               <div className="space-y-3">
                                 {locationItems.map((item) => {
                                   const isStudio = place.key === "Studio"
+                                  const danceIcon = item.style.includes("BACHATA")
+                                    ? "/images/bachata-silhouette.png"
+                                    : "/images/salsa-silhouette.png"
 
                                   return (
                                     <div
                                       key={`${card.title}-${item.day}-${item.style}-${item.time}`}
-                                      className={`relative overflow-hidden rounded-2xl border p-4 text-slate-950 shadow-xl ${
+                                      className={`relative overflow-hidden rounded-xl border p-3 text-slate-950 shadow-lg ${
                                         isStudio
                                           ? "border-yellow-100/80 bg-gradient-to-r from-yellow-200 via-amber-300 to-orange-400"
                                           : "border-sky-100/80 bg-gradient-to-r from-fuchsia-300 via-violet-300 to-sky-300"
                                       }`}
                                     >
-                                      <div className="flex items-center gap-4">
-                                        <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-xl border-2 border-slate-950/80 bg-white/45 shadow-md">
-                                          <Music className="h-7 w-7" />
+                                      <div className="flex items-center gap-3">
+                                        <div className="relative h-12 w-12 flex-shrink-0 overflow-hidden rounded-lg border-2 border-slate-950/80 bg-white/45 shadow-sm">
+                                          <Image
+                                            src={danceIcon}
+                                            alt=""
+                                            fill
+                                            sizes="48px"
+                                            className="object-contain p-1"
+                                          />
                                         </div>
                                         <div className="min-w-0 flex-1">
-                                          <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-                                            <p className="text-2xl font-bold leading-tight sm:text-[1.625rem]">{item.day}</p>
-                                            <span className="inline-flex items-center gap-1 text-2xl font-semibold sm:text-[1.625rem]">
-                                              <Clock className="h-6 w-6" />
+                                          <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5">
+                                            <p className="text-base font-bold leading-tight sm:text-lg">{item.day}</p>
+                                            <span className="inline-flex items-center gap-1 text-base font-semibold sm:text-lg">
+                                              <Clock className="h-4 w-4" />
                                               {item.time}
                                             </span>
                                           </div>
-                                          <p className="mt-1 text-[1.625rem] font-black uppercase leading-tight sm:text-[1.75rem]">
+                                          <p className="mt-0.5 text-lg font-black uppercase leading-tight sm:text-xl">
                                             {item.style}
                                           </p>
                                         </div>
@@ -760,8 +787,10 @@ export default function Home() {
         </div>
       </section>
 
+      <GoldenSectionDivider />
+
       {/* Nuestra Cultura */}
-      <section id="cultura" className="py-20 lg:py-28 bg-foreground relative overflow-hidden">
+      <section id="cultura" className="scroll-mt-28 py-14 lg:scroll-mt-36 lg:py-20 bg-foreground relative overflow-hidden">
         <div className="absolute top-0 right-0 w-1/2 h-full">
           <Image
             src="/images/hero-dancing.jpg"
@@ -792,7 +821,7 @@ export default function Home() {
               ].map((item) => (
                 <div key={item} className="flex items-center gap-3 bg-card/10 rounded-lg p-4">
                   <CheckCircle className="w-5 h-5 text-primary flex-shrink-0" />
-                  <span className="text-card font-medium">{item}</span>
+                  <span className="font-[Arial] text-lg font-semibold leading-snug text-card sm:text-xl">{item}</span>
                 </div>
               ))}
             </div>
@@ -817,8 +846,10 @@ export default function Home() {
         </div>
       </section>
 
+      <GoldenSectionDivider />
+
       {/* Testimonios */}
-      <section id="testimonios" className="py-20 lg:py-28 bg-card text-foreground">
+      <section id="testimonios" className="scroll-mt-28 py-14 lg:scroll-mt-36 lg:py-20 bg-card text-foreground">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-primary font-semibold uppercase tracking-wider text-sm">Testimonios</span>
@@ -855,8 +886,10 @@ export default function Home() {
         </div>
       </section>
 
+      <GoldenSectionDivider />
+
       {/* Contacto */}
-      <section id="contacto" className="py-20 lg:py-28 bg-foreground relative">
+      <section id="contacto" className="scroll-mt-28 py-14 lg:scroll-mt-36 lg:py-20 bg-foreground relative">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(185,28,28,0.1),transparent_50%)]" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">

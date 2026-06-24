@@ -61,7 +61,7 @@ export function WhatsAppWidget() {
         />
       )}
 
-      <div className="fixed bottom-4 right-4 z-50 font-sans flex flex-col items-end gap-3 sm:bottom-6 sm:right-6">
+      <div className="fixed bottom-12 right-3 z-50 font-[Arial] flex flex-col items-end gap-3 sm:bottom-6 sm:right-6">
         {state === 'info' && (
           <div
             className="w-80 max-w-[calc(100vw-2rem)] bg-white rounded-2xl overflow-hidden lg:w-96"
@@ -116,18 +116,18 @@ export function WhatsAppWidget() {
 
         <div className="flex items-center gap-2 self-end">
           {state === 'collapsed' && (
-            <span className="bg-white text-[#8B1A1A] text-sm font-semibold px-4 py-2 rounded-full shadow-md border border-red-100 whitespace-nowrap lg:px-5 lg:py-2.5 lg:text-base">
+            <span className="bg-white text-[#8B1A1A] text-base font-semibold px-4 py-2 rounded-full shadow-md border border-red-100 whitespace-nowrap lg:px-5 lg:py-2.5 lg:text-lg">
               Contactanos
             </span>
           )}
           <button
             onClick={handleToggle}
-            className="w-16 h-16 bg-[#25D366] hover:bg-[#20ba5c] rounded-full flex items-center justify-center shadow-xl transition-all duration-200 hover:scale-105 active:scale-95 flex-shrink-0 text-white lg:h-20 lg:w-20"
+            className="w-20 h-20 bg-[#25D366] hover:bg-[#20ba5c] rounded-full flex items-center justify-center shadow-xl transition-all duration-200 hover:scale-105 active:scale-95 flex-shrink-0 text-white lg:h-20 lg:w-20"
             style={state === 'collapsed' ? { animation: 'whatsapp-alarm 0.82s ease-in-out infinite' } : undefined}
             aria-label={state === 'collapsed' ? 'Abrir contacto' : 'Cerrar contacto'}
           >
             {state === 'collapsed' ? (
-              <FaWhatsapp className="w-8 h-8 text-white lg:h-10 lg:w-10" />
+              <FaWhatsapp className="w-10 h-10 text-white lg:h-10 lg:w-10" />
             ) : (
               <X className="w-7 h-7 text-white lg:h-9 lg:w-9" />
             )}
