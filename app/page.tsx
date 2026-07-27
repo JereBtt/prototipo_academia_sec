@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
-import { Menu, X, Users, Music, Heart, Award, MapPin, Clock, CheckCircle, Sparkles, Zap, House, Watch, ChevronLeft, ChevronRight } from "lucide-react"
+import { Menu, X, Users, Music, Heart, Award, MapPin, Clock, CheckCircle, Sparkles, Zap, Watch, ChevronLeft, ChevronRight, CalendarDays, PartyPopper } from "lucide-react"
 import { FaFacebookF, FaInstagram, FaWhatsapp } from "react-icons/fa"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
@@ -10,17 +10,41 @@ import { Input } from "@/components/ui/input"
 import { WhatsAppWidget } from "@/components/whatsapp-widget"
 
 const scheduleFromZero = [
-  { day: "Martes", location: "Studio – Vélez Sársfield 520", style: "ESPECIAL DE SALSA", time: "21:00 a 22:30Hs" },
-  { day: "Jueves", location: "Studio – Vélez Sársfield 520", style: "ESPECIAL DE BACHATA", time: "21:00 a 22:30Hs" },
-  { day: "Sábados", location: "Best Club – Chacabuco 472", style: "SALSA Y MERENGUE", time: "15:00 a 16:30Hs" },
-  { day: "Sábados", location: "Best Club – Chacabuco 472", style: "ESPECIAL DE BACHATA", time: "18:00 a 19:30Hs" },
+  {
+    group: "En la semana",
+    tone: "week",
+    items: [
+      { day: "Martes", style: "ESPECIAL DE SALSA", time: "21:00 a 22:30Hs" },
+      { day: "Jueves", style: "ESPECIAL DE BACHATA", time: "21:00 a 22:30Hs" },
+    ],
+  },
+  {
+    group: "Los fines de semana",
+    tone: "weekend",
+    items: [
+      { day: "Sábados", style: "SALSA Y MERENGUE", time: "14:30 a 16:00Hs" },
+      { day: "Sábados", style: "ESPECIAL DE BACHATA", time: "17:30 a 19:00Hs" },
+    ],
+  },
 ]
 
 const scheduleExperienced = [
-  { day: "Martes", location: "Studio – Vélez Sársfield 520", style: "ESPECIAL DE SALSA", time: "21:00 a 22:30Hs" },
-  { day: "Jueves", location: "Studio – Vélez Sársfield 520", style: "ESPECIAL DE BACHATA", time: "21:00 a 22:30Hs" },
-  { day: "Sábados", location: "Best Club – Chacabuco 472", style: "ESPECIAL DE SALSA", time: "16:30 a 18:00 Hs" },
-  { day: "Sábados", location: "Best Club – Chacabuco 472", style: "ESPECIAL DE BACHATA", time: "18:00 a 19:30 Hs" },
+  {
+    group: "En la semana",
+    tone: "week",
+    items: [
+      { day: "Martes", style: "ESPECIAL DE SALSA", time: "21:00 a 22:30Hs" },
+      { day: "Jueves", style: "ESPECIAL DE BACHATA", time: "21:00 a 22:30Hs" },
+    ],
+  },
+  {
+    group: "Los fines de semana",
+    tone: "weekend",
+    items: [
+      { day: "Sábados", style: "ESPECIAL DE SALSA", time: "16:00 a 17:30Hs" },
+      { day: "Sábados", style: "ESPECIAL DE BACHATA", time: "17:30 a 19:00Hs" },
+    ],
+  },
 ]
 
 const testimonials = [
@@ -98,7 +122,7 @@ export default function Home() {
 
   const navItems = [
     { name: "Inicio", href: "#inicio" },
-    { name: "Sedes", href: "#sedes" },
+    { name: "Sede", href: "#sedes" },
     { name: "Niveles y Horarios", href: "#horarios" },
     { name: "Nuestra Cultura", href: "#cultura" },
     { name: "Testimonios", href: "#testimonios" },
@@ -378,7 +402,6 @@ export default function Home() {
             {/* Características */}
             <div className="mt-24 flex flex-wrap gap-6 sm:mt-12">
               {[
-                { icon: House, text: "2 de los Salones más Grandes de Córdoba" },
                 { icon: Heart, text: "Ambiente único" },
                 { icon: Award, text: "4+ profes" },
                 { icon: Music, text: "Desde Cero y Todos los Niveles" },
@@ -469,7 +492,7 @@ export default function Home() {
         </div>
       </section> */}
 
-      {/* Nuestras Sedes */}
+      {/* Nuestra Sede */}
       <section id="sedes" className="scroll-mt-28 py-14 lg:scroll-mt-36 lg:py-20 bg-foreground relative overflow-hidden">
         <Image
           src="/images/background-sedes.png"
@@ -485,15 +508,15 @@ export default function Home() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="text-primary font-semibold uppercase tracking-wider text-sm">Ubicaciones</span>
-            <h2 className={`font-serif text-4xl sm:text-5xl font-bold mt-2 ${sectionTitleClass}`}>Nuestras Sedes</h2>
+            <span className="text-primary font-semibold uppercase tracking-wider text-sm">Ubicación</span>
+            <h2 className={`font-serif text-4xl sm:text-5xl font-bold mt-2 ${sectionTitleClass}`}>Nuestra Sede</h2>
             <p className={`${sectionLeadClass} text-card/75`}>
-              Elegí la sede que mejor se adapte a tus tiempos y a tu rutina. <br /> Conoce donde se viven nuestras clases.
+              Nos encontramos en pleno centro, en un hermoso salón pensado para que disfrutes cada clase.
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-8">
-            {/* Sucursal Studio */}
+          <div className="mx-auto max-w-3xl">
+            {/* Sede Studio */}
             <div className="group relative">
               <div className="absolute -inset-1 bg-gradient-to-r from-primary to-orange-500 rounded-3xl blur-sm opacity-30 group-hover:opacity-50 transition-opacity" />
               <div className="relative bg-card/5 border border-card/10 rounded-2xl overflow-hidden">
@@ -508,7 +531,7 @@ export default function Home() {
                   <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 to-transparent" />
                   <div className="absolute bottom-4 left-4">
                     <span className="bg-primary text-primary-foreground px-4 py-2 rounded-full text-sm font-bold">
-                      SUCURSAL STUDIO
+                      SEDE STUDIO
                     </span>
                   </div>
                 </div>
@@ -563,75 +586,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Sucursal Best Club */}
-            <div className="group relative">
-              <div className="absolute -inset-1 bg-gradient-to-r from-orange-500 to-red-600 rounded-3xl blur-sm opacity-30 group-hover:opacity-50 transition-opacity" />
-              <div className="relative bg-card/5 border border-card/10 rounded-2xl overflow-hidden">
-                {/* Main Photo */}
-                <div className="relative h-64 overflow-hidden">
-                  <Image
-                    src="/images/img-sucursales/best-main.png"
-                    alt="Studio de baile Best Club"
-                    fill
-                    className="object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 to-transparent" />
-                  <div className="absolute bottom-4 left-4">
-                    <span className="bg-accent text-accent-foreground px-4 py-2 rounded-full text-sm font-bold">
-                      SUCURSAL BESTCLUB
-                    </span>
-                  </div>
-                </div>
-
-                {/* Supporting Photos */}
-                <div className="grid grid-cols-2 gap-2 p-2">
-                  <div className="relative h-32 rounded-xl overflow-hidden">
-                    <Image
-                      src="/images/img-sucursales/best-detail-1.png"
-                      alt="Comunidad de baile"
-                      fill
-                      className="object-cover hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-                  <div className="relative h-32 rounded-xl overflow-hidden">
-                    <Image
-                      src="/images/img-sucursales/best-detail-2.png"
-                      alt="Pareja bailando"
-                      fill
-                      className="object-cover hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-                </div>
-
-                {/* Map Placeholder BESTCLUB*/}
-                <div className="p-4">
-                  <div className="relative h-48 rounded-xl overflow-hidden bg-card/10 border border-card/20">
-                    <iframe
-                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3404.68033830429!2d-64.18531322350927!3d-31.42293219656928!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9432a29007ba43a1%3A0x71d68825809b990e!2sBest%20Club!5e0!3m2!1ses-419!2sus!4v1777463892343!5m2!1ses-419!2sus"
-                      width="100%"
-                      height="100%"
-                      style={{ border: 0 }}
-                      allowFullScreen
-                      loading="lazy"
-                      referrerPolicy="no-referrer-when-downgrade"
-                      className="grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
-                    />
-                  </div>
-                </div>
-
-                {/* Location Info */}
-                <div className="p-6 pt-2">
-                  <div className="flex items-center gap-4">
-                    <div className="w-12 h-12 bg-accent rounded-xl flex items-center justify-center flex-shrink-0 rotate-3">
-                      <MapPin className="w-6 h-6 text-accent-foreground" />
-                    </div>
-                    <div>
-                      <h3 className="font-serif text-2xl sm:text-3xl font-bold text-card leading-tight">Bv. Chacabuco 472</h3>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -706,70 +660,65 @@ export default function Home() {
                         <span className="font-black text-yellow-300">{card.levelLabel}</span> {card.levels}
                       </div>
 
-                      <div className="mt-7 space-y-7">
-                        {[
-                          { key: "Studio", name: "STUDIO", address: "Vélez Sársfield 520" },
-                          { key: "Best Club", name: "BEST CLUB", address: "Chacabuco 472" },
-                        ].map((place) => {
-                          const locationItems = card.items.filter((item) => item.location.includes(place.key))
+                      <div className="mt-7 grid gap-5">
+                        {card.items.map((group) => (
+                          <div key={`${card.title}-${group.group}`} className="space-y-3">
+                            <div className="rounded-xl border border-yellow-300/35 bg-gradient-to-r from-card/10 via-card/15 to-card/10 px-4 py-2.5 text-center shadow-[0_0_18px_rgba(250,204,21,0.14)]">
+                              <h4 className="flex items-center justify-center gap-2 text-base font-black uppercase tracking-[0.14em] text-card sm:text-lg">
+                                {group.tone === "weekend" ? (
+                                  <PartyPopper className="h-5 w-5 text-yellow-300" />
+                                ) : (
+                                  <CalendarDays className="h-5 w-5 text-yellow-300" />
+                                )}
+                                {group.group}
+                              </h4>
+                            </div>
 
-                          if (locationItems.length === 0) return null
+                            <div className="space-y-3">
+                              {group.items.map((item) => {
+                                const danceIcon = item.style.includes("BACHATA")
+                                  ? "/images/bachata-silhouette.png"
+                                  : "/images/salsa-silhouette.png"
+                                const isWeekend = group.tone === "weekend"
 
-                          return (
-                            <div key={`${card.title}-${place.key}`} className="space-y-3">
-                              <div className="flex items-center gap-3">
-                                <MapPin className="h-7 w-7 flex-shrink-0 text-yellow-300" />
-                                <h4 className="text-2xl font-black uppercase tracking-wide text-card">
-                                  {place.name} <span className="text-lg font-medium normal-case text-card/80">- {place.address}</span>
-                                </h4>
-                              </div>
-
-                              <div className="space-y-3">
-                                {locationItems.map((item) => {
-                                  const isStudio = place.key === "Studio"
-                                  const danceIcon = item.style.includes("BACHATA")
-                                    ? "/images/bachata-silhouette.png"
-                                    : "/images/salsa-silhouette.png"
-
-                                  return (
-                                    <div
-                                      key={`${card.title}-${item.day}-${item.style}-${item.time}`}
-                                      className={`relative overflow-hidden rounded-xl border p-3 text-slate-950 shadow-lg ${
-                                        isStudio
-                                          ? "border-yellow-100/80 bg-gradient-to-r from-yellow-200 via-amber-300 to-orange-400"
-                                          : "border-sky-100/80 bg-gradient-to-r from-fuchsia-300 via-violet-300 to-sky-300"
-                                      }`}
-                                    >
-                                      <div className="flex items-center gap-3">
-                                        <div className="relative h-12 w-12 flex-shrink-0 overflow-hidden rounded-lg border-2 border-slate-950/80 bg-white/45 shadow-sm">
-                                          <Image
-                                            src={danceIcon}
-                                            alt=""
-                                            fill
-                                            sizes="48px"
-                                            className="object-contain p-1"
-                                          />
+                                return (
+                                  <div
+                                    key={`${card.title}-${group.group}-${item.day}-${item.style}-${item.time}`}
+                                    className={`relative overflow-hidden rounded-xl border p-3 text-slate-950 shadow-lg ${
+                                      isWeekend
+                                        ? "border-sky-100/80 bg-gradient-to-r from-fuchsia-300 via-violet-300 to-sky-300"
+                                        : "border-yellow-100/80 bg-gradient-to-r from-yellow-200 via-amber-300 to-orange-400"
+                                    }`}
+                                  >
+                                    <div className="flex items-center gap-3">
+                                      <div className="relative h-12 w-12 flex-shrink-0 overflow-hidden rounded-lg border-2 border-slate-950/80 bg-white/45 shadow-sm">
+                                        <Image
+                                          src={danceIcon}
+                                          alt=""
+                                          fill
+                                          sizes="48px"
+                                          className="object-contain p-1"
+                                        />
+                                      </div>
+                                      <div className="min-w-0 flex-1">
+                                        <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5">
+                                          <p className="text-base font-bold leading-tight sm:text-lg">{item.day}</p>
+                                          <span className="inline-flex items-center gap-1 text-base font-semibold sm:text-lg">
+                                            <Clock className="h-4 w-4" />
+                                            {item.time}
+                                          </span>
                                         </div>
-                                        <div className="min-w-0 flex-1">
-                                          <div className="flex flex-wrap items-center gap-x-2 gap-y-0.5">
-                                            <p className="text-base font-bold leading-tight sm:text-lg">{item.day}</p>
-                                            <span className="inline-flex items-center gap-1 text-base font-semibold sm:text-lg">
-                                              <Clock className="h-4 w-4" />
-                                              {item.time}
-                                            </span>
-                                          </div>
-                                          <p className="mt-0.5 text-lg font-black uppercase leading-tight sm:text-xl">
-                                            {item.style}
-                                          </p>
-                                        </div>
+                                        <p className="mt-0.5 text-lg font-black italic uppercase leading-tight text-[#2b1231] drop-shadow-[0_1px_0_rgba(255,255,255,0.35)] sm:text-xl">
+                                          {item.style}
+                                        </p>
                                       </div>
                                     </div>
-                                  )
-                                })}
-                              </div>
+                                  </div>
+                                )
+                              })}
                             </div>
-                          )
-                        })}
+                          </div>
+                        ))}
                       </div>
                     </div>
                   </div>
