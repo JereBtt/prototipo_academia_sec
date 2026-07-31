@@ -2,16 +2,37 @@
 import "../styles/global.css";
 
 const {
-  title = "Clases de Salsa y Bachata en Córdoba | Salsa en Córdoba",
-  description = "Aprendé salsa y bachata en Córdoba Capital. Clases desde cero y para personas con experiencia en nuestra sede céntrica de Av. Vélez Sarsfield 520.",
+  title = "Salsa en Córdoba | Clases de Salsa y Bachata en Córdoba",
+  description = "Salsa en Córdoba es una academia de baile en Córdoba Capital con clases de salsa y bachata desde cero y para personas con experiencia en Av. Vélez Sarsfield 520.",
   canonical = "https://www.salsaencordoba.com.ar/",
   image = "https://www.salsaencordoba.com.ar/images/hero-carousel-1-salsa-bachata.png",
 } = Astro.props;
 
+const seoKeywords = [
+  "Salsa en Córdoba",
+  "salsa cordoba",
+  "salsa córdoba",
+  "clases de salsa en Córdoba",
+  "clases de salsa en Córdoba Capital",
+  "clases de bachata en Córdoba",
+  "clases de bachata en Córdoba Capital",
+  "aprender a bailar salsa",
+  "aprender bachata",
+  "academia de salsa y bachata en Córdoba",
+  "dónde hacer salsa en Córdoba",
+  "donde hacer salsa en cordoba",
+  "tomar clases de salsa",
+  "salsa y bachata en Córdoba",
+  "clases de baile en Córdoba",
+  "Av. Vélez Sarsfield 520",
+].join(", ");
+
 const organizationSchema = {
   "@context": "https://schema.org",
   "@type": ["LocalBusiness", "SportsActivityLocation"],
+  "@id": `${canonical}#academia`,
   name: "Salsa en Córdoba",
+  alternateName: "Academia Salsa en Córdoba",
   description,
   url: canonical,
   image,
@@ -24,6 +45,11 @@ const organizationSchema = {
     addressLocality: "Córdoba",
     addressRegion: "Córdoba",
     addressCountry: "AR",
+  },
+  geo: {
+    "@type": "GeoCoordinates",
+    latitude: -31.4201,
+    longitude: -64.1888,
   },
   areaServed: {
     "@type": "City",
@@ -58,7 +84,27 @@ const organizationSchema = {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    <meta name="keywords" content={seoKeywords} />
+    <meta name="Keywords" content={seoKeywords} />
+    <meta name="classification" content="clases de salsa en Córdoba, clases de bachata en Córdoba, academia de baile en Córdoba Capital, aprender a bailar salsa y bachata" />
+    <meta name="Classification" content="clases de salsa en Córdoba, clases de bachata en Córdoba, academia de baile en Córdoba Capital, aprender a bailar salsa y bachata" />
     <meta name="robots" content="index, follow" />
+    <meta name="rating" content="General" />
+    <meta name="distribution" content="Global" />
+    <meta name="revisit-after" content="5 days" />
+    <meta name="language" content="es-AR" />
+    <meta http-equiv="content-language" content="es-AR" />
+    <meta name="geo.region" content="AR-X" />
+    <meta name="geo.placename" content="Córdoba" />
+    <meta name="geo.position" content="-31.4201;-64.1888" />
+    <meta name="ICBM" content="-31.4201, -64.1888" />
+    <meta name="Geography" content="Argentina" />
+    <meta name="country" content="Argentina" />
+    <meta name="state" content="Córdoba" />
+    <meta name="city" content="Córdoba" />
+    <meta name="title" content={title} />
+    <meta name="DC.Title" content={title} />
+    <meta http-equiv="title" content={title} />
     <meta name="theme-color" content="#5f100f" />
     <title>{title}</title>
     <link rel="canonical" href={canonical} />
