@@ -1,0 +1,683 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import GoldenSectionDivider from "../components/GoldenSectionDivider.astro";
+import WhatsappWidget from "../components/WhatsappWidget.astro";
+
+const WHATSAPP_NUMBER = "5493513715379";
+const whatsappLink = (message: string) => `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+
+const navItems = [
+  { name: "Inicio", href: "#inicio" },
+  { name: "Sede", href: "#sedes" },
+  { name: "Niveles y Horarios", href: "#horarios" },
+  { name: "Nuestra Cultura", href: "#cultura" },
+  { name: "Testimonios", href: "#testimonios" },
+  { name: "Contacto", href: "#contacto" },
+];
+
+const heroSlides = [
+  {
+    phrase: "Salsa y Bachata.",
+    image: "/images/hero-carousel-1-salsa-bachata.png",
+    alt: "Pareja bailando salsa y bachata",
+    imageClass: "object-cover object-center sm:object-contain",
+    backdropClass: "opacity-25",
+  },
+  {
+    phrase: "Cortá la semana o hacé del sábado tu día especial.",
+    image: "/images/hero-carousel-2-corta-semana.png",
+    alt: "Pareja bailando en clase",
+    imageClass: "object-cover object-center sm:object-contain",
+    backdropClass: "opacity-25",
+  },
+  {
+    phrase: "¡Hacé amigos y divertite!",
+    image: "/images/hero-carousel-3-amigos.png",
+    alt: "Grupo de alumnos bailando salsa",
+    imageClass: "object-cover object-center sm:object-contain",
+    backdropClass: "opacity-25",
+  },
+  {
+    phrase: "Dale un giro a tu vida.",
+    image: "/images/hero-carousel-4-giro.png",
+    alt: "Grupo de alumnos de Salsa en Córdoba",
+    imageClass: "object-cover object-center sm:object-contain",
+    backdropClass: "opacity-25",
+  },
+  {
+    phrase: "Promo universitarios.",
+    image: "/images/hero-carousel-5-universitarios.png",
+    alt: "Pareja joven bailando en estudio",
+    imageClass: "object-cover object-center sm:object-contain",
+    backdropClass: "opacity-25",
+  },
+];
+
+const features = [
+  { icon: "heart", text: "Ambiente único" },
+  { icon: "award", text: "4+ profes" },
+  { icon: "music", text: "Desde Cero y Todos los Niveles" },
+  { icon: "watch", text: "Jornadas de Clases Extendidas de 1 hora y media" },
+];
+
+const scheduleFromZero = [
+  {
+    group: "En la semana",
+    tone: "week",
+    items: [
+      { day: "Martes", style: "ESPECIAL DE SALSA", time: "21:00 a 22:30Hs" },
+      { day: "Jueves", style: "ESPECIAL DE BACHATA", time: "21:00 a 22:30Hs" },
+    ],
+  },
+  {
+    group: "Los fines de semana",
+    tone: "weekend",
+    items: [
+      { day: "Sábados", style: "SALSA Y MERENGUE", time: "15:00 a 16:30Hs" },
+      { day: "Sábados", style: "ESPECIAL DE BACHATA", time: "17:30 a 19:00Hs" },
+    ],
+  },
+];
+
+const scheduleExperienced = [
+  {
+    group: "En la semana",
+    tone: "week",
+    items: [
+      { day: "Martes", style: "ESPECIAL DE SALSA", time: "21:00 a 22:30Hs" },
+      { day: "Jueves", style: "ESPECIAL DE BACHATA", time: "21:00 a 22:30Hs" },
+    ],
+  },
+  {
+    group: "Los fines de semana",
+    tone: "weekend",
+    items: [
+      { day: "Sábados", style: "ESPECIAL DE SALSA", time: "16:00 a 17:30Hs" },
+      { day: "Sábados", style: "ESPECIAL DE BACHATA", time: "17:30 a 19:00Hs" },
+    ],
+  },
+];
+
+const scheduleCards = [
+  {
+    title: "Desde Cero",
+    subtitle: "Primera vez bailando",
+    levels: "Intro 1 (Desde cero) | Intro 2 (Básico / Otros ritmos)",
+    items: scheduleFromZero,
+    icon: "sparkles",
+    iconImage: "/images/schedule-beginner-icon.png",
+    glow: "from-primary/60 via-fuchsia-500/30 to-yellow-300/60",
+    iconClass: "bg-slate-950/95 text-primary-foreground",
+  },
+  {
+    title: "Ya Bailo",
+    subtitle: "Con experiencia previa",
+    levels: "Principiantes, Principiantes Avanzados e Intermedios",
+    items: scheduleExperienced,
+    icon: "zap",
+    iconImage: "/images/schedule-experienced-icon.png",
+    glow: "from-fuchsia-500/55 via-primary/35 to-yellow-300/60",
+    iconClass: "bg-slate-950/95 text-accent-foreground",
+  },
+];
+
+const cultureTags = [
+  "Comunidad activa y unida",
+  "Energía positiva siempre",
+  "Respeto y buenas vibras",
+  "Aprendizaje sin presiones",
+];
+
+const testimonials = [
+  { name: "María García", quote: "Empecé desde cero y en pocos meses ya me siento segura bailando. El ambiente es increíble.", image: "/images/testimonial-1.jpg" },
+  { name: "Laura Fernández", quote: "Los profesores son muy pacientes y dedicados. Cada clase es un momento para desconectar y disfrutar.", image: "/images/testimonial-2.jpg" },
+  { name: "Carlos Rodríguez", quote: "Vine solo y encontré una comunidad. Ahora no me pierdo ninguna clase.", image: "/images/testimonial-3.jpg" },
+];
+
+const sectionTitleClass = "bg-gradient-to-r from-amber-300 via-yellow-500 to-amber-700 bg-clip-text text-transparent drop-shadow-[0_2px_14px_rgba(251,191,36,0.22)]";
+const sectionLeadClass = "mt-4 font-[Arial] text-xl sm:text-2xl leading-relaxed";
+---
+
+<BaseLayout>
+  <div class="min-h-screen overflow-x-hidden bg-foreground text-card">
+    <button type="button" data-mobile-backdrop aria-label="Cerrar menú" class="fixed inset-0 z-40 hidden cursor-default bg-transparent lg:hidden"></button>
+
+    <header class="fixed left-0 right-0 top-0 z-50 border-b border-red-950/50 bg-[#5f100f]/95 font-[Arial] shadow-lg shadow-black/20 backdrop-blur-sm">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="grid h-16 grid-cols-[1fr_2.5rem] items-center gap-3 lg:h-20 lg:grid-cols-[11rem_1fr_11rem] lg:gap-4">
+          <a href="#inicio" class="relative z-20 h-16 w-32 self-stretch overflow-visible lg:h-20 lg:w-44" aria-label="Ir al inicio">
+            <div class="absolute left-0 top-0 h-24 w-32 overflow-visible drop-shadow-[0_8px_10px_rgba(0,0,0,0.45)] lg:h-32 lg:w-44">
+              <img src="/images/logo-navbar-test.png" alt="Salsa en Córdoba" class="h-full w-full object-contain" fetchpriority="high" />
+            </div>
+            <span class="sr-only">Salsa en Córdoba</span>
+          </a>
+
+          <nav class="hidden h-full items-center justify-center gap-6 self-center lg:flex xl:gap-8">
+            {navItems.map((item) => (
+              <a href={item.href} class="text-center text-base font-semibold uppercase tracking-wide text-card/80 transition-colors hover:text-primary">
+                {item.name}
+              </a>
+            ))}
+          </nav>
+
+          <div class="flex items-center justify-self-end self-center gap-4">
+            <a href={whatsappLink("Hola! Quiero consultar por las clases de salsa y bachata.")} target="_blank" rel="noopener noreferrer" class="hidden items-center gap-2 rounded-full bg-primary px-6 py-2.5 text-base font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90 lg:flex">
+              <svg viewBox="0 0 32 32" aria-hidden="true" class="h-4 w-4 fill-current"><path d="M16.02 3.2A12.67 12.67 0 0 0 5.28 22.6L3.2 30.34l7.92-2.08a12.62 12.62 0 0 0 6.02 1.53h.01A12.69 12.69 0 0 0 16.02 3.2Zm7.45 18.08c-.31.88-1.82 1.68-2.55 1.79-.65.1-1.48.14-2.38-.15-.55-.17-1.25-.4-2.15-.79-3.79-1.64-6.26-5.45-6.45-5.7-.19-.25-1.54-2.05-1.54-3.91 0-1.86.97-2.77 1.31-3.15.34-.38.75-.47 1-.47.25 0 .5 0 .72.01.23.01.54-.09.85.65.31.75 1.08 2.63 1.17 2.82.09.19.16.41.03.66-.13.25-.19.41-.38.63-.19.22-.41.49-.58.66-.19.19-.39.4-.17.78.22.38.98 1.61 2.1 2.61 1.44 1.28 2.65 1.68 3.03 1.87.38.19.6.16.82-.09.22-.25.94-1.1 1.19-1.48.25-.38.5-.31.85-.19.34.13 2.19 1.03 2.57 1.22.38.19.63.28.72.44.09.16.09.91-.22 1.79Z"/></svg>
+              WhatsApp
+            </a>
+            <button data-menu-toggle class="self-center justify-self-end p-2 text-card lg:hidden" aria-expanded="false" aria-controls="mobile-menu" aria-label="Abrir menú">
+              <span data-menu-open class="block text-3xl leading-none">☰</span>
+              <span data-menu-close class="hidden text-3xl leading-none">×</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div id="mobile-menu" data-mobile-menu class="hidden border-t border-red-950/50 bg-[#5f100f] shadow-xl lg:hidden">
+        <div class="space-y-3 px-4 py-4">
+          {navItems.map((item) => (
+            <a href={item.href} class="block py-2 text-base font-semibold uppercase tracking-wide text-card/90 transition-colors hover:text-primary" data-mobile-link>
+              {item.name}
+            </a>
+          ))}
+          <a href={whatsappLink("Hola, quiero consultar por las clases de salsa y bachata.")} target="_blank" rel="noopener noreferrer" class="mt-4 flex w-full items-center justify-center gap-2 rounded-full bg-primary px-6 py-3 font-semibold text-primary-foreground shadow-sm transition-colors hover:bg-primary/90">
+            <svg viewBox="0 0 32 32" aria-hidden="true" class="h-4 w-4 fill-current"><path d="M16.02 3.2A12.67 12.67 0 0 0 5.28 22.6L3.2 30.34l7.92-2.08a12.62 12.62 0 0 0 6.02 1.53h.01A12.69 12.69 0 0 0 16.02 3.2Zm7.45 18.08c-.31.88-1.82 1.68-2.55 1.79-.65.1-1.48.14-2.38-.15-.55-.17-1.25-.4-2.15-.79-3.79-1.64-6.26-5.45-6.45-5.7-.19-.25-1.54-2.05-1.54-3.91 0-1.86.97-2.77 1.31-3.15.34-.38.75-.47 1-.47.25 0 .5 0 .72.01.23.01.54-.09.85.65.31.75 1.08 2.63 1.17 2.82.09.19.16.41.03.66-.13.25-.19.41-.38.63-.19.22-.41.49-.58.66-.19.19-.39.4-.17.78.22.38.98 1.61 2.1 2.61 1.44 1.28 2.65 1.68 3.03 1.87.38.19.6.16.82-.09.22-.25.94-1.1 1.19-1.48.25-.38.5-.31.85-.19.34.13 2.19 1.03 2.57 1.22.38.19.63.28.72.44.09.16.09.91-.22 1.79Z"/></svg>
+            WhatsApp
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <section id="inicio" data-hero class="relative flex min-h-screen items-center overflow-hidden pt-24 font-[Arial] lg:pt-32">
+      <div class="absolute inset-0">
+        <div data-hero-bg class="absolute -inset-y-28 inset-x-0 will-change-transform" style="transform: translate3d(0, var(--hero-parallax, 0px), 0) scale(1.1)">
+          <img src="/images/background-hero.png" alt="" class="h-full w-full object-cover object-center" fetchpriority="high" />
+        </div>
+        <div class="absolute inset-0 bg-foreground/58"></div>
+        <div class="absolute inset-0 bg-gradient-to-b from-foreground/35 via-transparent to-foreground/50"></div>
+      </div>
+
+      <div class="absolute right-10 top-1/4 hidden h-32 w-32 animate-pulse rounded-full border-4 border-primary/30 lg:block"></div>
+      <div class="absolute bottom-1/4 left-10 hidden h-20 w-20 rounded-full bg-primary/20 blur-xl lg:block"></div>
+
+      <div class="relative z-10 mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8 lg:py-12">
+        <div class="mx-auto flex max-w-7xl flex-col items-center text-center">
+          <div class="mb-5 w-full max-w-5xl sm:mb-7">
+            <div class="relative mx-auto text-center">
+              <div class="mb-3 flex items-center justify-center gap-3 sm:gap-4">
+                <span class="h-px w-10 bg-gradient-to-r from-transparent via-amber-300 to-amber-300 sm:w-20"></span>
+                <span class="text-xs font-extrabold uppercase tracking-[0.34em] text-amber-200 drop-shadow-[0_2px_10px_rgba(0,0,0,0.7)] sm:text-sm lg:text-base">
+                  Academia de baile en Córdoba
+                </span>
+                <span class="h-px w-10 bg-gradient-to-l from-transparent via-amber-300 to-amber-300 sm:w-20"></span>
+              </div>
+
+              <div class="relative flex items-center justify-center gap-2 sm:gap-5">
+                <span class="hidden text-4xl text-amber-300 drop-shadow-[0_0_16px_rgba(251,191,36,0.75)] sm:inline">✦</span>
+                <h1 class="text-balance font-[Arial] text-3xl font-black leading-tight text-card drop-shadow-[0_4px_18px_rgba(0,0,0,0.72)] sm:text-5xl lg:text-6xl">
+                  Aprendé <span class="bg-gradient-to-r from-amber-200 via-yellow-400 to-amber-500 bg-clip-text text-transparent drop-shadow-[0_0_18px_rgba(251,191,36,0.28)]">Salsa y Bachata</span>
+                  <span class="mt-1 block text-xl font-extrabold uppercase tracking-[0.18em] text-amber-100/95 sm:text-2xl lg:text-3xl">en Córdoba</span>
+                </h1>
+                <span class="hidden text-4xl text-amber-300 drop-shadow-[0_0_16px_rgba(251,191,36,0.75)] sm:inline">✦</span>
+              </div>
+
+              <div class="mt-3 flex items-center justify-center gap-3 sm:mt-4">
+                <span class="h-px w-12 bg-gradient-to-r from-transparent to-amber-300/70 sm:w-24"></span>
+                <span class="rounded-full border border-amber-300/85 bg-foreground/35 px-5 py-1.5 text-sm font-extrabold lowercase tracking-[0.08em] text-card shadow-[0_0_18px_rgba(251,191,36,0.18)] backdrop-blur-sm sm:px-6 sm:text-lg">
+                  desde cero
+                </span>
+                <span class="h-px w-12 bg-gradient-to-l from-transparent to-amber-300/70 sm:w-24"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="w-full max-w-4xl">
+            <div class="relative aspect-[4/5] w-full overflow-hidden rounded-2xl border border-card/15 bg-foreground/80 shadow-2xl shadow-black/30 backdrop-blur-sm sm:aspect-square lg:aspect-[5/4]">
+              {heroSlides.map((slide, index) => (
+                <div data-hero-slide class={`absolute inset-0 transition-all duration-700 ease-out ${index === 0 ? "scale-100 opacity-100" : "scale-[1.02] opacity-0"}`} aria-hidden={index === 0 ? "false" : "true"}>
+                  <img src={slide.image} alt="" class={`absolute inset-0 h-full w-full object-cover blur-xl scale-110 ${slide.backdropClass}`} loading={index === 0 ? "eager" : "lazy"} />
+                  <img src={slide.image} alt={slide.alt} class={`absolute inset-0 h-full w-full ${slide.imageClass}`} loading={index === 0 ? "eager" : "lazy"} />
+                </div>
+              ))}
+
+              <button type="button" data-slide-prev aria-label="Ver imagen anterior" class="absolute left-2 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-card/20 bg-foreground/55 text-card shadow-lg backdrop-blur-md transition-colors hover:bg-primary sm:left-4 sm:h-11 sm:w-11">
+                <span class="text-3xl leading-none">‹</span>
+              </button>
+              <button type="button" data-slide-next aria-label="Ver imagen siguiente" class="absolute right-2 top-1/2 z-10 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-card/20 bg-foreground/55 text-card shadow-lg backdrop-blur-md transition-colors hover:bg-primary sm:right-4 sm:h-11 sm:w-11">
+                <span class="text-3xl leading-none">›</span>
+              </button>
+            </div>
+
+            <div class="mt-4 flex justify-center gap-2" aria-label="Slides del carrusel">
+              {heroSlides.map((slide, index) => (
+                <button data-slide-dot type="button" aria-label={`Ver slide ${index + 1}`} class={`h-2 rounded-full transition-all duration-500 ${index === 0 ? "w-9 bg-primary" : "w-3 bg-card/45 hover:bg-card/70"}`}></button>
+              ))}
+            </div>
+          </div>
+
+          <div class="mt-4 flex flex-col gap-4 sm:mt-10 sm:flex-row">
+            <a href={whatsappLink("Hola! Vi la página de salsa y bachata en Córdoba y quiero empezar a bailar. ¿Me pasás mas info?")} target="_blank" rel="noopener noreferrer" class="flex items-center justify-center gap-2 rounded-full bg-[#1FA855] px-8 py-4 text-lg font-semibold text-white shadow-lg shadow-emerald-950/25 transition-colors hover:bg-[#188C47]">
+              <svg viewBox="0 0 32 32" aria-hidden="true" class="h-5 w-5 fill-current"><path d="M16.02 3.2A12.67 12.67 0 0 0 5.28 22.6L3.2 30.34l7.92-2.08a12.62 12.62 0 0 0 6.02 1.53h.01A12.69 12.69 0 0 0 16.02 3.2Zm7.45 18.08c-.31.88-1.82 1.68-2.55 1.79-.65.1-1.48.14-2.38-.15-.55-.17-1.25-.4-2.15-.79-3.79-1.64-6.26-5.45-6.45-5.7-.19-.25-1.54-2.05-1.54-3.91 0-1.86.97-2.77 1.31-3.15.34-.38.75-.47 1-.47.25 0 .5 0 .72.01.23.01.54-.09.85.65.31.75 1.08 2.63 1.17 2.82.09.19.16.41.03.66-.13.25-.19.41-.38.63-.19.22-.41.49-.58.66-.19.19-.39.4-.17.78.22.38.98 1.61 2.1 2.61 1.44 1.28 2.65 1.68 3.03 1.87.38.19.6.16.82-.09.22-.25.94-1.1 1.19-1.48.25-.38.5-.31.85-.19.34.13 2.19 1.03 2.57 1.22.38.19.63.28.72.44.09.16.09.91-.22 1.79Z"/></svg>
+              Consultar por WhatsApp
+            </a>
+            <a href="#horarios" class="flex items-center justify-center gap-2 rounded-full border-2 border-card bg-transparent px-8 py-4 text-lg font-semibold text-card transition-colors hover:bg-card hover:text-foreground">
+              Ver horarios
+            </a>
+          </div>
+
+          <div class="mt-24 flex flex-wrap justify-center gap-6 sm:mt-12">
+            {features.map((item) => (
+              <div class="flex items-center gap-3 rounded-full bg-card/10 px-5 py-2.5">
+                <span class="text-2xl text-primary">{item.icon === "heart" ? "♡" : item.icon === "award" ? "♙" : item.icon === "music" ? "♪" : "◉"}</span>
+                <span class="text-base font-semibold text-card sm:text-lg">{item.text}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <GoldenSectionDivider />
+
+    <section id="sedes" class="scroll-mt-28 bg-foreground relative overflow-hidden py-14 lg:scroll-mt-36 lg:py-20">
+      <img src="/images/background-sedes.png" alt="" class="absolute inset-0 h-full w-full object-cover object-center" loading="lazy" />
+      <div class="absolute inset-0 bg-foreground/60"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-foreground/30 via-transparent to-foreground/55"></div>
+      <div class="absolute right-20 top-20 hidden h-40 w-40 rounded-full border-4 border-primary/20 lg:block"></div>
+      <div class="absolute bottom-20 left-20 hidden h-24 w-24 rounded-full bg-primary/10 blur-xl lg:block"></div>
+
+      <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto mb-16 max-w-3xl text-center">
+          <span class="text-base font-bold uppercase tracking-wider text-primary sm:text-lg">Ubicación</span>
+          <h2 class={`mt-2 font-serif text-4xl font-bold sm:text-5xl ${sectionTitleClass}`}>Nuestra Sede</h2>
+          <p class={`${sectionLeadClass} text-card/75`}>Nos encontramos en pleno centro, en un hermoso salón pensado para que disfrutes cada clase.</p>
+        </div>
+
+        <div class="mx-auto max-w-3xl">
+          <div class="group relative">
+            <div class="absolute -inset-1 rounded-3xl bg-gradient-to-r from-primary to-orange-500 opacity-30 blur-sm transition-opacity group-hover:opacity-50"></div>
+            <div class="relative overflow-hidden rounded-2xl border border-card/10 bg-card/5">
+              <div class="relative h-64 overflow-hidden">
+                <img src="/images/img-sucursales/studio-main.png" alt="Studio de baile Vélez Sarsfield" class="h-full w-full object-cover object-center transition-transform duration-500 group-hover:scale-105" loading="lazy" />
+                <div class="absolute inset-0 bg-gradient-to-t from-foreground/80 to-transparent"></div>
+                <div class="absolute bottom-4 left-4">
+                  <span class="rounded-full bg-primary px-4 py-2 text-sm font-bold text-primary-foreground">SEDE STUDIO</span>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-2 p-2">
+                <div class="relative h-32 overflow-hidden rounded-xl">
+                  <img src="/images/img-sucursales/studio-detail-1.png" alt="Detalles del studio" class="h-full w-full object-cover transition-transform duration-300 hover:scale-105" loading="lazy" />
+                </div>
+                <div class="relative h-32 overflow-hidden rounded-xl">
+                  <img src="/images/img-sucursales/studio-detail-2.png" alt="Clase en el studio" class="h-full w-full object-cover transition-transform duration-300 hover:scale-105" loading="lazy" />
+                </div>
+              </div>
+
+              <div class="p-4">
+                <div class="relative h-48 overflow-hidden rounded-xl border border-card/20 bg-card/10">
+                  <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3404.7386783558304!2d-64.19215342350932!3d-31.42132519649172!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9432a3a0e80a326f%3A0xef01065cef7c5957!2sStudio%20Multiespacio!5e0!3m2!1ses-419!2sus!4v1777463974328!5m2!1ses-419!2sus"
+                    width="100%"
+                    height="100%"
+                    style="border:0"
+                    allowfullscreen
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    class="opacity-80 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
+                  ></iframe>
+                </div>
+              </div>
+
+              <div class="p-6 pt-2">
+                <div class="flex items-center gap-4">
+                  <div class="flex h-12 w-12 flex-shrink-0 -rotate-3 items-center justify-center rounded-xl bg-primary">
+                    <span class="text-2xl text-primary-foreground">⌖</span>
+                  </div>
+                  <h3 class="font-serif text-2xl font-bold leading-tight text-card sm:text-3xl">Av. Vélez Sarsfield 520</h3>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <GoldenSectionDivider />
+
+    <section id="horarios" class="scroll-mt-28 bg-foreground relative overflow-hidden py-14 font-[Arial] text-card lg:scroll-mt-36 lg:py-20">
+      <img src="/images/background-horarios.png" alt="" class="absolute inset-0 h-full w-full object-cover object-center" loading="lazy" />
+      <div class="absolute inset-0 bg-foreground/56"></div>
+      <div class="absolute inset-0 bg-gradient-to-b from-foreground/30 via-transparent to-foreground/55"></div>
+
+      <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto mb-12 max-w-3xl text-center lg:mb-16">
+          <span class="text-base font-bold uppercase tracking-wider text-primary sm:text-lg">Encontrá tu horario</span>
+          <h2 class={`mt-2 font-serif text-4xl font-bold sm:text-5xl ${sectionTitleClass}`}>Niveles y Horarios</h2>
+          <p class={`${sectionLeadClass} text-card/80`}>Encontrá el horario y nivel que mejor se adapte a vos.</p>
+        </div>
+
+        <div class="grid gap-8 lg:grid-cols-2">
+          {scheduleCards.map((card) => (
+            <div class="relative">
+              <div class={`absolute -inset-1 rounded-[2rem] bg-gradient-to-r ${card.glow} opacity-70 blur-lg`}></div>
+              <div class="relative overflow-hidden rounded-[1.75rem] border border-fuchsia-300/35 bg-slate-950/72 p-4 shadow-2xl shadow-black/40 backdrop-blur-md sm:p-6">
+                <div class="absolute inset-0 bg-gradient-to-br from-white/8 via-transparent to-primary/10"></div>
+                <div class="relative">
+                  <div class="rounded-3xl border border-fuchsia-300/60 bg-slate-950/70 p-4 shadow-[0_0_28px_rgba(217,70,239,0.22)] sm:p-5">
+                    <div class="flex items-center gap-4">
+                      <div class={`flex h-16 w-16 flex-shrink-0 items-center justify-center rounded-full ${card.iconClass} ring-2 ring-yellow-300/85 shadow-[0_0_18px_rgba(250,204,21,0.45),inset_0_0_18px_rgba(185,28,28,0.45)]`}>
+                        <img src={card.iconImage} alt="" class="h-[3.85rem] w-[3.85rem] object-contain drop-shadow-[0_2px_7px_rgba(0,0,0,0.75)]" loading="lazy" />
+                      </div>
+                      <div>
+                        <h3 class="text-3xl font-black leading-tight text-card sm:text-4xl">{card.title}</h3>
+                        <p class="text-base font-medium text-card/85 sm:text-lg">{card.subtitle}</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="mt-5 rounded-xl border border-yellow-300/80 bg-black/45 px-4 py-3 text-sm font-semibold text-card shadow-[0_0_18px_rgba(250,204,21,0.18)] sm:text-base">
+                    <span class="font-black text-yellow-300">Niveles:</span> {card.levels}
+                  </div>
+
+                  <div class="mt-7 grid gap-5">
+                    {card.items.map((group) => (
+                      <div class="space-y-3">
+                        <div class="rounded-xl border border-yellow-300/35 bg-gradient-to-r from-card/10 via-card/15 to-card/10 px-4 py-2.5 text-center shadow-[0_0_18px_rgba(250,204,21,0.14)]">
+                          <h4 class="flex items-center justify-center gap-2 text-base font-black uppercase tracking-[0.14em] text-card sm:text-lg">
+                            <span class="text-yellow-300">{group.tone === "weekend" ? "✦" : "▣"}</span>
+                            {group.group}
+                          </h4>
+                        </div>
+
+                        <div class="space-y-3">
+                          {group.items.map((item) => {
+                            const danceIcon = item.style.includes("BACHATA") ? "/images/bachata-silhouette.png" : "/images/salsa-silhouette.png";
+                            const isWeekend = group.tone === "weekend";
+                            return (
+                              <div class={`relative overflow-hidden rounded-xl border p-3 text-slate-950 shadow-lg ${isWeekend ? "border-sky-100/80 bg-gradient-to-r from-fuchsia-300 via-violet-300 to-sky-300" : "border-yellow-100/80 bg-gradient-to-r from-yellow-200 via-amber-300 to-orange-400"}`}>
+                                <div class="flex items-center gap-3">
+                                  <div class="relative h-12 w-12 flex-shrink-0 overflow-hidden rounded-lg border-2 border-slate-950/80 bg-white/45 shadow-sm">
+                                    <img src={danceIcon} alt="" class="h-full w-full object-contain p-1" loading="lazy" />
+                                  </div>
+                                  <div class="min-w-0 flex-1">
+                                    <div class="flex flex-wrap items-center gap-x-2 gap-y-0.5">
+                                      <p class="text-base font-bold leading-tight sm:text-lg">{item.day}</p>
+                                      <span class="inline-flex items-center gap-1 text-base font-semibold sm:text-lg">
+                                        <span>◷</span>
+                                        {item.time}
+                                      </span>
+                                    </div>
+                                    <p class="mt-0.5 text-lg font-black italic uppercase leading-tight text-[#2b1231] drop-shadow-[0_1px_0_rgba(255,255,255,0.35)] sm:text-xl">{item.style}</p>
+                                  </div>
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div class="mt-10 flex flex-wrap items-center justify-center gap-3 text-center text-lg font-black uppercase tracking-[0.28em] text-yellow-300 sm:text-2xl">
+          <span>BAILÁ</span>
+          <span class="text-card/80">✦</span>
+          <span>DISFRUTÁ</span>
+          <span class="text-card/80">✦</span>
+          <span>CONECTÁ</span>
+        </div>
+      </div>
+    </section>
+
+    <GoldenSectionDivider />
+
+    <section id="cultura" class="scroll-mt-28 bg-foreground relative overflow-hidden py-14 lg:scroll-mt-36 lg:py-20">
+      <div class="absolute right-0 top-0 h-full w-1/2">
+        <img src="/images/hero-dancing.jpg" alt="Comunidad bailando" class="h-full w-full object-cover opacity-20" loading="lazy" />
+        <div class="absolute inset-0 bg-gradient-to-r from-foreground via-foreground/80 to-transparent"></div>
+      </div>
+
+      <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="max-w-2xl">
+          <span class="text-base font-bold uppercase tracking-wider text-primary sm:text-lg">Filosofía</span>
+          <h2 class={`mb-6 mt-2 font-serif text-4xl font-bold sm:text-5xl ${sectionTitleClass}`}>Nuestra Cultura</h2>
+          <p class={`${sectionLeadClass} mb-8 text-card/75`}>
+            En Salsa en Córdoba creemos que bailar es mucho más que aprender pasos. Es un espacio para desconectar, conectar con otros y sentirte bien. Sin presiones, sin exigencias, solo buena energía.
+          </p>
+
+          <div class="mb-8 grid gap-4 sm:grid-cols-2">
+            {cultureTags.map((item) => (
+              <div class="flex items-center gap-3 rounded-lg bg-card/10 p-4">
+                <span class="flex-shrink-0 text-xl text-primary">✓</span>
+                <span class="font-[Arial] text-lg font-semibold leading-snug text-card sm:text-xl">{item}</span>
+              </div>
+            ))}
+          </div>
+
+          <div class="inline-flex items-center gap-6 rounded-2xl bg-primary/20 p-6">
+            <div class="text-center">
+              <p class="font-serif text-4xl font-bold text-primary">20+</p>
+              <p class="text-sm text-card/70">Años</p>
+            </div>
+            <div class="h-12 w-px bg-card/20"></div>
+            <div class="text-center">
+              <p class="font-serif text-4xl font-bold text-primary">3000+</p>
+              <p class="text-sm text-card/70">Alumnos</p>
+            </div>
+            <div class="h-12 w-px bg-card/20"></div>
+            <div class="text-center">
+              <p class="font-serif text-4xl font-bold text-primary">4+</p>
+              <p class="text-sm text-card/70">Profes</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <GoldenSectionDivider />
+
+    <section id="testimonios" class="scroll-mt-28 bg-card py-14 text-foreground lg:scroll-mt-36 lg:py-20">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="mx-auto mb-16 max-w-3xl text-center">
+          <span class="text-base font-bold uppercase tracking-wider text-primary sm:text-lg">Testimonios</span>
+          <h2 class={`mt-2 font-serif text-4xl font-bold sm:text-5xl ${sectionTitleClass}`}>Lo que dicen nuestros alumnos</h2>
+        </div>
+
+        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {testimonials.map((testimonial, idx) => (
+            <div class={`relative rounded-2xl bg-secondary p-6 ${idx === 1 ? "lg:-translate-y-4" : ""}`}>
+              <div class="absolute -top-4 left-6 flex h-8 w-8 items-center justify-center rounded-full bg-primary">
+                <span class="font-serif text-2xl text-primary-foreground">&ldquo;</span>
+              </div>
+              <div class="mb-4 flex items-center gap-4 pt-4">
+                <div class="relative h-16 w-16 overflow-hidden rounded-full ring-4 ring-primary/20">
+                  <img src={testimonial.image} alt={testimonial.name} class="h-full w-full object-cover" loading="lazy" />
+                </div>
+                <div>
+                  <p class="font-bold text-foreground">{testimonial.name}</p>
+                  <p class="text-sm text-muted-foreground">Alumna</p>
+                </div>
+              </div>
+              <p class="leading-relaxed text-muted-foreground">{testimonial.quote}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <GoldenSectionDivider />
+
+    <section id="contacto" class="scroll-mt-28 bg-foreground relative py-14 lg:scroll-mt-36 lg:py-20">
+      <div class="absolute inset-0 bg-[radial-gradient(circle_at_70%_80%,rgba(185,28,28,0.1),transparent_50%)]"></div>
+
+      <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="grid items-center gap-12 lg:grid-cols-2">
+          <div>
+            <span class="text-base font-bold uppercase tracking-wider text-primary sm:text-lg">Contacto</span>
+            <h2 class={`mb-6 mt-2 font-serif text-4xl font-bold sm:text-5xl ${sectionTitleClass}`}>¿Querés empezar a bailar?</h2>
+            <p class={`${sectionLeadClass} mb-8 text-card/75`}>
+              Dejanos tu consulta y te asesoramos según tu nivel y disponibilidad. También podés visitar nuestro perfil de Instagram y Facebook.
+            </p>
+
+            <div class="flex gap-4">
+              <a aria-label="Abrir Instagram" href="https://www.instagram.com/salsa.en.cordoba?igsh=MW5ua2NjdDN4a21lOA==" target="_blank" rel="noopener noreferrer" class="flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-br from-[#feda75] via-[#d62976] to-[#4f5bd5] text-white shadow-lg shadow-black/20 ring-2 ring-white/25 transition-transform hover:scale-105 sm:h-16 sm:w-16">
+                <svg viewBox="0 0 24 24" aria-hidden="true" class="h-8 w-8 fill-none stroke-current stroke-[2.2] sm:h-9 sm:w-9">
+                  <rect x="4.2" y="4.2" width="15.6" height="15.6" rx="4.4"></rect>
+                  <circle cx="12" cy="12" r="3.8"></circle>
+                  <circle cx="16.9" cy="7.1" r="0.9" fill="currentColor" stroke="none"></circle>
+                </svg>
+              </a>
+              <a aria-label="Abrir Facebook" href="https://www.facebook.com/Salsa.en.Cordoba1?rdid=hd1RaF0Wfv1ZMEWc&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F18Hpq3zRsX%2F#" target="_blank" rel="noopener noreferrer" class="flex h-14 w-14 items-center justify-center rounded-full bg-[#1877F2] text-white shadow-lg shadow-black/20 ring-2 ring-white/25 transition-transform hover:scale-105 sm:h-16 sm:w-16">
+                <svg viewBox="0 0 24 24" aria-hidden="true" class="h-8 w-8 fill-current sm:h-9 sm:w-9">
+                  <path d="M14.2 8.15V6.7c0-.7.47-.86.8-.86h2.04V2.25L14.23 2.24c-3.12 0-3.83 2.34-3.83 3.84v2.07H7.95v3.7h2.45v9.9h3.8v-9.9h3.05l.4-3.7H14.2Z"></path>
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <div class="relative">
+            <div class="absolute -inset-1 rounded-3xl bg-gradient-to-r from-primary to-orange-500 opacity-30 blur-sm"></div>
+            <div class="relative rounded-xl border border-card/20 bg-card/5 backdrop-blur-sm">
+              <div data-contact-card class="space-y-4 p-6" role="button" tabindex="0">
+                <input type="text" placeholder="Tu nombre" maxlength="30" readonly class="w-full rounded-md border border-card/20 bg-card/10 px-3 py-2 text-card placeholder:text-card/40" />
+                <input type="email" placeholder="tu@email.com" maxlength="50" readonly class="w-full rounded-md border border-card/20 bg-card/10 px-3 py-2 text-card placeholder:text-card/40" />
+                <input type="tel" placeholder="+54 9 1234 5678" maxlength="30" readonly class="w-full rounded-md border border-card/20 bg-card/10 px-3 py-2 text-card placeholder:text-card/40" />
+                <button type="button" class="w-full rounded-full bg-primary px-6 py-3 font-semibold text-primary-foreground transition-colors hover:bg-primary/90">Enviar consulta</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="border-t border-card/10 bg-foreground py-12">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col items-center justify-between gap-6 sm:flex-row">
+          <a href="#inicio" class="flex items-center" aria-label="Ir al inicio">
+            <div class="relative h-20 w-40 overflow-hidden sm:h-24 sm:w-48">
+              <img src="/images/logo-navbar-test.png" alt="Salsa en Córdoba" class="h-full w-full object-contain" loading="lazy" />
+            </div>
+            <span class="sr-only">Salsa en Córdoba</span>
+          </a>
+
+          <p class="text-sm text-card/50">© 2026 Salsa en Córdoba. Todos los derechos reservados.</p>
+        </div>
+      </div>
+    </footer>
+
+    <WhatsappWidget />
+  </div>
+</BaseLayout>
+
+<script>
+  const menuToggle = document.querySelector("[data-menu-toggle]");
+  const mobileMenu = document.querySelector("[data-mobile-menu]");
+  const mobileBackdrop = document.querySelector("[data-mobile-backdrop]");
+  const menuOpenIcon = document.querySelector("[data-menu-open]");
+  const menuCloseIcon = document.querySelector("[data-menu-close]");
+  const mobileLinks = document.querySelectorAll("[data-mobile-link]");
+
+  const setMenuOpen = (open) => {
+    mobileMenu?.classList.toggle("hidden", !open);
+    mobileBackdrop?.classList.toggle("hidden", !open);
+    menuOpenIcon?.classList.toggle("hidden", open);
+    menuCloseIcon?.classList.toggle("hidden", !open);
+    menuToggle?.setAttribute("aria-expanded", String(open));
+    menuToggle?.setAttribute("aria-label", open ? "Cerrar menú" : "Abrir menú");
+  };
+
+  menuToggle?.addEventListener("click", () => setMenuOpen(mobileMenu?.classList.contains("hidden") ?? true));
+  mobileBackdrop?.addEventListener("click", () => setMenuOpen(false));
+  mobileLinks.forEach((link) => link.addEventListener("click", () => setMenuOpen(false)));
+
+  const hero = document.querySelector("[data-hero]");
+  const reduceMotionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+  let parallaxFrame = null;
+
+  const updateParallax = () => {
+    parallaxFrame = null;
+    if (!hero || reduceMotionQuery.matches) {
+      hero?.style.setProperty("--hero-parallax", "0px");
+      return;
+    }
+    const rect = hero.getBoundingClientRect();
+    if (rect.bottom <= 0 || rect.top >= window.innerHeight) return;
+    const mobile = window.matchMedia("(max-width: 767px)").matches;
+    const scrollDistance = window.scrollY - hero.offsetTop;
+    const strength = mobile ? 0.46 : 0.38;
+    const minOffset = mobile ? -72 : -56;
+    const maxOffset = mobile ? 150 : 190;
+    const offset = Math.min(Math.max(scrollDistance * strength, minOffset), maxOffset);
+    hero.style.setProperty("--hero-parallax", `${offset}px`);
+  };
+
+  const requestParallax = () => {
+    if (parallaxFrame === null) {
+      parallaxFrame = window.requestAnimationFrame(updateParallax);
+    }
+  };
+
+  updateParallax();
+  window.addEventListener("scroll", requestParallax, { passive: true });
+  window.addEventListener("resize", requestParallax);
+  reduceMotionQuery.addEventListener("change", requestParallax);
+
+  const slides = [...document.querySelectorAll("[data-hero-slide]")];
+  const dots = [...document.querySelectorAll("[data-slide-dot]")];
+  const prev = document.querySelector("[data-slide-prev]");
+  const next = document.querySelector("[data-slide-next]");
+  let activeSlide = 0;
+  let slideTimer;
+
+  const setSlide = (nextIndex) => {
+    activeSlide = (nextIndex + slides.length) % slides.length;
+    slides.forEach((slide, index) => {
+      slide.classList.toggle("opacity-100", index === activeSlide);
+      slide.classList.toggle("scale-100", index === activeSlide);
+      slide.classList.toggle("opacity-0", index !== activeSlide);
+      slide.classList.toggle("scale-[1.02]", index !== activeSlide);
+      slide.setAttribute("aria-hidden", index === activeSlide ? "false" : "true");
+    });
+    dots.forEach((dot, index) => {
+      dot.classList.toggle("w-9", index === activeSlide);
+      dot.classList.toggle("bg-primary", index === activeSlide);
+      dot.classList.toggle("w-3", index !== activeSlide);
+      dot.classList.toggle("bg-card/45", index !== activeSlide);
+    });
+  };
+
+  const restartTimer = () => {
+    window.clearInterval(slideTimer);
+    slideTimer = window.setInterval(() => setSlide(activeSlide + 1), 4200);
+  };
+
+  prev?.addEventListener("click", () => {
+    setSlide(activeSlide - 1);
+    restartTimer();
+  });
+  next?.addEventListener("click", () => {
+    setSlide(activeSlide + 1);
+    restartTimer();
+  });
+  dots.forEach((dot, index) => dot.addEventListener("click", () => {
+    setSlide(index);
+    restartTimer();
+  }));
+  restartTimer();
+
+  const contactCard = document.querySelector("[data-contact-card]");
+  const openWhatsappWidget = () => window.dispatchEvent(new Event("open-whatsapp-widget"));
+  contactCard?.addEventListener("click", openWhatsappWidget);
+  contactCard?.addEventListener("focusin", openWhatsappWidget);
+  contactCard?.addEventListener("keydown", (event) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      openWhatsappWidget();
+    }
+  });
+</script>

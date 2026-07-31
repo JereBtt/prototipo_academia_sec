@@ -1,0 +1,93 @@
+<button
+  type="button"
+  aria-label="Cerrar contacto"
+  data-whatsapp-backdrop
+  class="fixed inset-0 z-40 hidden cursor-default bg-transparent"
+></button>
+
+<div class="fixed bottom-12 right-3 z-50 font-[Arial] flex flex-col items-end gap-3 sm:bottom-6 sm:right-6">
+  <div
+    data-whatsapp-panel
+    class="hidden w-80 max-w-[calc(100vw-2rem)] overflow-hidden rounded-2xl bg-white lg:w-96"
+    style="box-shadow: 0 8px 40px rgba(0,0,0,0.18)"
+  >
+    <div class="flex items-start justify-between bg-[#8B1A1A] px-5 py-4">
+      <div class="flex items-center gap-3">
+        <div class="h-10 w-10 flex-shrink-0 overflow-hidden rounded-full border-2 border-white/20 lg:h-12 lg:w-12">
+          <img src="/images/avatar-profe.jpg" alt="Profesor de salsa" class="h-full w-full object-cover" loading="lazy" />
+        </div>
+        <div>
+          <p class="text-xs font-medium uppercase tracking-wider text-white/70">Salsa en Córdoba</p>
+          <div class="mb-3 mt-2 flex items-center gap-2">
+            <span class="h-2 w-2 flex-shrink-0 rounded-full bg-emerald-500"></span>
+            <span class="text-xs font-medium text-white">En línea ahora</span>
+          </div>
+        </div>
+      </div>
+      <button data-whatsapp-close class="mt-0.5 flex-shrink-0 rounded-full p-1 text-white/70 transition-colors hover:text-white" aria-label="Cerrar">
+        <span class="block text-xl leading-none">×</span>
+      </button>
+    </div>
+
+    <div class="px-5 py-5">
+      <p class="mb-5 text-sm leading-relaxed text-gray-600 lg:text-base">
+        Consultanos por clases de salsa y bachata y te ayudamos a encontrar el nivel y horario ideal para vos.
+      </p>
+
+      <a
+        data-whatsapp-link
+        href="https://wa.me/5493513715379?text=Hola!%20Quiero%20consultar%20por%20las%20clases%20de%20salsa%20y%20bachata."
+        target="_blank"
+        rel="noopener noreferrer"
+        class="flex w-full items-center justify-center gap-2 rounded-xl bg-[#25D366] px-4 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-[#20ba5c] lg:py-4 lg:text-base"
+      >
+        <svg viewBox="0 0 32 32" aria-hidden="true" class="h-5 w-5 fill-current lg:h-6 lg:w-6"><path d="M16.02 3.2A12.67 12.67 0 0 0 5.28 22.6L3.2 30.34l7.92-2.08a12.62 12.62 0 0 0 6.02 1.53h.01A12.69 12.69 0 0 0 16.02 3.2Zm7.45 18.08c-.31.88-1.82 1.68-2.55 1.79-.65.1-1.48.14-2.38-.15-.55-.17-1.25-.4-2.15-.79-3.79-1.64-6.26-5.45-6.45-5.7-.19-.25-1.54-2.05-1.54-3.91 0-1.86.97-2.77 1.31-3.15.34-.38.75-.47 1-.47.25 0 .5 0 .72.01.23.01.54-.09.85.65.31.75 1.08 2.63 1.17 2.82.09.19.16.41.03.66-.13.25-.19.41-.38.63-.19.22-.41.49-.58.66-.19.19-.39.4-.17.78.22.38.98 1.61 2.1 2.61 1.44 1.28 2.65 1.68 3.03 1.87.38.19.6.16.82-.09.22-.25.94-1.1 1.19-1.48.25-.38.5-.31.85-.19.34.13 2.19 1.03 2.57 1.22.38.19.63.28.72.44.09.16.09.91-.22 1.79Z"/></svg>
+        <span>Contactanos por WhatsApp</span>
+      </a>
+    </div>
+  </div>
+
+  <div class="flex items-center gap-2 self-end">
+    <span data-whatsapp-label class="whatsapp-label rounded-full border border-red-100 bg-white px-4 py-2 text-base font-semibold whitespace-nowrap text-[#8B1A1A] shadow-md lg:px-5 lg:py-2.5 lg:text-lg">
+      Contactanos
+    </span>
+    <button
+      data-whatsapp-toggle
+      class="whatsapp-float flex h-20 w-20 flex-shrink-0 items-center justify-center rounded-full bg-[#25D366] text-white shadow-xl transition-all duration-200 hover:scale-105 hover:bg-[#20ba5c] active:scale-95 lg:h-20 lg:w-20"
+      aria-label="Abrir contacto"
+    >
+      <svg data-whatsapp-icon="open" viewBox="0 0 32 32" aria-hidden="true" class="h-10 w-10 fill-current"><path d="M16.02 3.2A12.67 12.67 0 0 0 5.28 22.6L3.2 30.34l7.92-2.08a12.62 12.62 0 0 0 6.02 1.53h.01A12.69 12.69 0 0 0 16.02 3.2Zm7.45 18.08c-.31.88-1.82 1.68-2.55 1.79-.65.1-1.48.14-2.38-.15-.55-.17-1.25-.4-2.15-.79-3.79-1.64-6.26-5.45-6.45-5.7-.19-.25-1.54-2.05-1.54-3.91 0-1.86.97-2.77 1.31-3.15.34-.38.75-.47 1-.47.25 0 .5 0 .72.01.23.01.54-.09.85.65.31.75 1.08 2.63 1.17 2.82.09.19.16.41.03.66-.13.25-.19.41-.38.63-.19.22-.41.49-.58.66-.19.19-.39.4-.17.78.22.38.98 1.61 2.1 2.61 1.44 1.28 2.65 1.68 3.03 1.87.38.19.6.16.82-.09.22-.25.94-1.1 1.19-1.48.25-.38.5-.31.85-.19.34.13 2.19 1.03 2.57 1.22.38.19.63.28.72.44.09.16.09.91-.22 1.79Z"/></svg>
+      <span data-whatsapp-icon="close" class="hidden text-4xl leading-none">×</span>
+    </button>
+  </div>
+</div>
+
+<script>
+  const panel = document.querySelector("[data-whatsapp-panel]");
+  const backdrop = document.querySelector("[data-whatsapp-backdrop]");
+  const label = document.querySelector("[data-whatsapp-label]");
+  const toggle = document.querySelector("[data-whatsapp-toggle]");
+  const closeButtons = document.querySelectorAll("[data-whatsapp-close], [data-whatsapp-backdrop], [data-whatsapp-link]");
+  const openIcon = document.querySelector('[data-whatsapp-icon="open"]');
+  const closeIcon = document.querySelector('[data-whatsapp-icon="close"]');
+
+  const setWhatsappOpen = (open) => {
+    panel?.classList.toggle("hidden", !open);
+    backdrop?.classList.toggle("hidden", !open);
+    label?.classList.toggle("hidden", open);
+    toggle?.classList.toggle("whatsapp-float", !open);
+    openIcon?.classList.toggle("hidden", open);
+    closeIcon?.classList.toggle("hidden", !open);
+    toggle?.setAttribute("aria-label", open ? "Cerrar contacto" : "Abrir contacto");
+  };
+
+  toggle?.addEventListener("click", () => setWhatsappOpen(panel?.classList.contains("hidden") ?? true));
+  closeButtons.forEach((button) => button.addEventListener("click", () => setWhatsappOpen(false)));
+  window.addEventListener("open-whatsapp-widget", () => setWhatsappOpen(true));
+</script>
+
+<style>
+  .whatsapp-float {
+    animation: whatsapp-alarm 0.82s ease-in-out infinite;
+  }
+</style>

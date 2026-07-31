@@ -1,0 +1,86 @@
+---
+import "../styles/global.css";
+
+const {
+  title = "Clases de Salsa y Bachata en Córdoba | Salsa en Córdoba",
+  description = "Aprendé salsa y bachata en Córdoba Capital. Clases desde cero y para personas con experiencia en nuestra sede céntrica de Av. Vélez Sarsfield 520.",
+  canonical = "https://www.salsaencordoba.com.ar/",
+  image = "https://www.salsaencordoba.com.ar/images/hero-carousel-1-salsa-bachata.png",
+} = Astro.props;
+
+const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": ["LocalBusiness", "SportsActivityLocation"],
+  name: "Salsa en Córdoba",
+  description,
+  url: canonical,
+  image,
+  logo: "https://www.salsaencordoba.com.ar/images/logo-navbar-test.png",
+  telephone: "+54 9 351 371-5379",
+  priceRange: "$$",
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: "Av. Vélez Sarsfield 520",
+    addressLocality: "Córdoba",
+    addressRegion: "Córdoba",
+    addressCountry: "AR",
+  },
+  areaServed: {
+    "@type": "City",
+    name: "Córdoba",
+  },
+  sameAs: [
+    "https://www.instagram.com/salsa.en.cordoba",
+    "https://www.facebook.com/Salsa.en.Cordoba1",
+  ],
+  makesOffer: [
+    {
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Service",
+        name: "Clases de salsa y bachata desde cero",
+      },
+    },
+    {
+      "@type": "Offer",
+      itemOffered: {
+        "@type": "Service",
+        name: "Clases de salsa y bachata para personas con experiencia",
+      },
+    },
+  ],
+};
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#5f100f" />
+    <title>{title}</title>
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/images/favicon-sec.png" />
+    <meta property="og:locale" content="es_AR" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Salsa en Córdoba" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={image} />
+    <meta property="og:image:alt" content="Pareja bailando salsa y bachata en Salsa en Córdoba" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet" />
+    <script type="application/ld+json" set:html={JSON.stringify(organizationSchema)} />
+  </head>
+  <body class="font-sans antialiased">
+    <slot />
+  </body>
+</html>
