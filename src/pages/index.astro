@@ -7,11 +7,13 @@ const WHATSAPP_NUMBER = "5493513715379";
 const STUDIO_ADDRESS = "Av. Vélez Sarsfield 520, X5000 Córdoba";
 const whatsappLink = (message: string) =>
   `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+const NAVBAR_WHATSAPP_MESSAGE =
+  "Hola! Quiero recibir informacion sobre las clases de salsa y bachata.";
 
 const navbarSocialLinks = [
   {
     label: "Abrir WhatsApp",
-    href: whatsappLink("Hola! Quiero consultar por las clases de salsa y bachata."),
+    href: whatsappLink(NAVBAR_WHATSAPP_MESSAGE),
     className:
       "bg-[#22c55e]/95 text-white shadow-[0_8px_18px_rgba(34,197,94,0.22)] hover:bg-[#16a34a]",
     icon: `<svg viewBox="0 0 32 32" aria-hidden="true" class="h-5 w-5 fill-current"><path d="M16.02 3.2A12.67 12.67 0 0 0 5.28 22.6L3.2 30.34l7.92-2.08a12.62 12.62 0 0 0 6.02 1.53h.01A12.69 12.69 0 0 0 16.02 3.2Zm7.45 18.08c-.31.88-1.82 1.68-2.55 1.79-.65.1-1.48.14-2.38-.15-.55-.17-1.25-.4-2.15-.79-3.79-1.64-6.26-5.45-6.45-5.7-.19-.25-1.54-2.05-1.54-3.91 0-1.86.97-2.77 1.31-3.15.34-.38.75-.47 1-.47.25 0 .5 0 .72.01.23.01.54-.09.85.65.31.75 1.08 2.63 1.17 2.82.09.19.16.41.03.66-.13.25-.19.41-.38.63-.19.22-.41.49-.58.66-.19.19-.39.4-.17.78.22.38.98 1.61 2.1 2.61 1.44 1.28 2.65 1.68 3.03 1.87.38.19.6.16.82-.09.22-.25.94-1.1 1.19-1.48.25-.38.5-.31.85-.19.34.13 2.19 1.03 2.57 1.22.38.19.63.28.72.44.09.16.09.91-.22 1.79Z"></path></svg>`,
@@ -161,22 +163,53 @@ const cultureTags = [
 
 const testimonials = [
   {
-    name: "María García",
+    name: "Sandra Vilca",
+    role: "Empezó desde cero",
     quote:
-      "Empecé desde cero y en pocos meses ya me siento segura bailando. El ambiente es increíble.",
-    image: "/images/testimonial-1.jpg",
+      "Siempre me gustó la Salsa y la Bachata, fui sola porque no tenía con quién empezar y pensé que iba a sentirme incómoda. Fue todo lo contrario. Las parejas se van armando y rotando durante la clase, así que enseguida te integrás. El ambiente es muy cálido y los profes están siempre atentos para ayudarte. Fue una de las mejores decisiones que tomé.",
+    image: "/images/testimonials/sandra-vilca.jpeg",
   },
   {
-    name: "Laura Fernández",
+    name: "Gabriela Dicarlo",
+    role: "Alumna desde hace años",
     quote:
-      "Los profesores son muy pacientes y dedicados. Cada clase es un momento para desconectar y disfrutar.",
-    image: "/images/testimonial-2.jpg",
+      "Para mí, Salsa en Córdoba es mucho más que una academia. Es un lugar donde desconecto de las preocupaciones, vuelvo a sonreír y comparto momentos increíbles. Acá encontré amistades, contención y una gran familia. Gracias por hacerme sentir parte desde el primer día. Siempre voy a llevar este lugar en mi corazón.",
+    image: "/images/testimonials/gabriela-dicarlo.jpeg",
   },
   {
-    name: "Carlos Rodríguez",
+    name: "Vanesa Gigena",
+    role: "Volvió a bailar",
     quote:
-      "Vine solo y encontré una comunidad. Ahora no me pierdo ninguna clase.",
-    image: "/images/testimonial-3.jpg",
+      "Había bailado hace muchos años y quería retomar, pero tenía miedo de haberme olvidado de todo. Me sorprendió lo fácil que fue volver a engancharme. Acá respetan los tiempos de cada uno y siempre hay alguien dispuesto a ayudarte. Hoy bailar volvió a ser una de las mejores partes de mi semana.",
+    image: "/images/testimonials/vanesa-gigena.jpeg",
+  },
+  {
+    name: "Valentín Bossio",
+    role: "Empezó sin experiencia",
+    quote:
+      "Nunca había tomado una clase de baile y pensé que me iba a costar muchísimo. Los profes explican paso a paso y hacen que aprender sea divertido. En pocas semanas ya estaba bailando cosas que jamás imaginé. Lo recomiendo a cualquiera que tenga ganas de empezar.",
+    image: "/images/testimonials/testimonio-4.jpeg",
+  },
+  {
+    name: "Lorena Rucca",
+    role: "Ya bailaba",
+    quote:
+      "Había pasado por otras academias y buscaba un lugar donde realmente pudiera mejorar mi técnica. Acá encontré exactamente eso. Las clases son exigentes, dinámicas y siempre aprendés algo nuevo. Se nota la experiencia de los profesores y el nivel del grupo motiva a seguir creciendo.",
+    image: "/images/testimonials/lorena-rucca.jpeg",
+  },
+  {
+    name: "Florencia Mansilla",
+    role: "Alumna de hace varios años",
+    quote:
+      "Hace años que elijo esta academia porque en cada clase sigo aprendiendo y disfrutando como el primer día. Lo que más destaco es la calidad humana de los profesores y el hermoso grupo que se forma. Con el tiempo hice grandes amigos y encontré un lugar al que siempre dan ganas de volver. Hoy, más que una academia, es parte de mi vida.",
+    image: "/images/testimonials/florencia-mansilla.jpeg",
+  },
+  {
+    name: "Héctor Chanampa",
+    role: "Empezó para salir de la rutina",
+    quote:
+      "Buscaba hacer una actividad distinta después del trabajo y encontré mucho más que una clase de baile. Me ayudó a desconectarme del estrés, moverme, conocer gente y ganar confianza. Nunca es tarde para empezar y este lugar demuestra justamente eso.",
+    image: "/images/testimonials/hector-chanampa.jpeg",
   },
 ];
 
@@ -195,6 +228,7 @@ const sectionLeadClass =
       class="fixed inset-0 z-40 hidden cursor-default bg-transparent lg:hidden"
     ></button>
 
+    <!-- Header -->
     <header
       class="fixed left-0 right-0 top-0 z-50 border-b border-red-950/50 bg-[#5f100f]/95 font-[Arial] shadow-lg shadow-black/20 backdrop-blur-sm"
     >
@@ -300,6 +334,7 @@ const sectionLeadClass =
       </div>
     </header>
 
+    <!-- Hero Section -->
     <section
       id="inicio"
       data-hero
@@ -507,6 +542,7 @@ const sectionLeadClass =
 
     <GoldenSectionDivider />
 
+    <!-- Sedes Section -->
     <section
       id="sedes"
       class="scroll-mt-28 bg-foreground relative overflow-hidden py-14 lg:scroll-mt-36 lg:py-20"
@@ -613,7 +649,9 @@ const sectionLeadClass =
               </div>
 
               <div class="px-5 pb-6 pt-2 sm:px-7">
-                <div class="flex items-center justify-between gap-4">
+                <div
+                  class="relative flex items-center justify-between gap-4 pr-14"
+                >
                   <div class="flex min-w-0 items-center gap-4">
                     <svg
                       viewBox="0 0 64 64"
@@ -627,12 +665,11 @@ const sectionLeadClass =
                       <path
                         fill="#ff5b62"
                         d="M19.1 23.8c0-8.26 5.94-14.74 14.32-15.54-1.92-.38-4.86-.04-6.68.56-6.21 2.06-10.49 7.73-10.49 14.6 0 4.38 1.78 9.27 4.23 14.02-1.1-4.6-1.38-9.02-1.38-13.64Z"
-                        opacity=".65"
-                      ></path>
+                        opacity=".65"></path>
                     </svg>
-                    <div class="min-w-0">
+                    <div class="min-w-0 text-center">
                       <h3
-                        class="font-[Arial] text-2xl font-bold leading-tight text-card drop-shadow-[0_3px_12px_rgba(0,0,0,0.45)] sm:text-3xl"
+                        class="text-left font-[Arial] text-2xl font-bold leading-tight text-card drop-shadow-[0_3px_12px_rgba(0,0,0,0.45)] sm:text-3xl"
                       >
                         <span>STUDIO - </span>
                         <span class="text-yellow-300">Vélez Sársfield 520</span>
@@ -647,7 +684,7 @@ const sectionLeadClass =
                   <button
                     type="button"
                     data-copy-address={STUDIO_ADDRESS}
-                    class="group relative flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full border border-card/20 bg-card/10 text-card shadow-[0_6px_16px_rgba(0,0,0,0.22)] transition hover:-translate-y-0.5 hover:bg-card/18 hover:text-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-300/70"
+                    class="group absolute right-0 top-1/2 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-card/20 bg-card/10 text-card shadow-[0_6px_16px_rgba(0,0,0,0.22)] transition hover:-translate-y-[calc(50%+2px)] hover:bg-card/18 hover:text-yellow-300 focus:outline-none focus:ring-2 focus:ring-yellow-300/70"
                     aria-label={`Copiar dirección: ${STUDIO_ADDRESS}`}
                     title="Copiar dirección"
                   >
@@ -657,7 +694,9 @@ const sectionLeadClass =
                       class="h-5 w-5 fill-none stroke-current stroke-[2.2]"
                     >
                       <rect x="8" y="8" width="10" height="12" rx="2"></rect>
-                      <path d="M6 16H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                      <path
+                        d="M6 16H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"
+                      ></path>
                     </svg>
                     <span
                       data-copy-feedback
@@ -676,6 +715,7 @@ const sectionLeadClass =
 
     <GoldenSectionDivider />
 
+    <!-- Horarios Section -->
     <section
       id="horarios"
       class="scroll-mt-28 bg-foreground relative overflow-hidden py-14 font-[Arial] text-card lg:scroll-mt-36 lg:py-20"
@@ -859,6 +899,7 @@ const sectionLeadClass =
 
     <GoldenSectionDivider />
 
+    <!-- Cultura Section -->
     <section
       id="cultura"
       class="scroll-mt-28 bg-foreground relative overflow-hidden py-14 lg:scroll-mt-36 lg:py-20"
@@ -930,6 +971,7 @@ const sectionLeadClass =
 
     <GoldenSectionDivider />
 
+    <!-- Testimonios Section -->
     <section
       id="testimonios"
       class="scroll-mt-28 bg-card py-14 text-foreground lg:scroll-mt-36 lg:py-20"
@@ -947,11 +989,15 @@ const sectionLeadClass =
           </h2>
         </div>
 
-        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div
+          data-testimonials-carousel
+          class="grid items-stretch gap-6 sm:grid-cols-2 lg:grid-cols-3"
+        >
           {
-            testimonials.map((testimonial, idx) => (
+            testimonials.slice(0, 3).map((testimonial, idx) => (
               <div
-                class={`relative rounded-2xl bg-secondary p-6 ${idx === 1 ? "lg:-translate-y-4" : ""}`}
+                data-testimonial-card
+                class={`relative flex min-h-[25rem] flex-col rounded-2xl bg-secondary p-6 shadow-lg shadow-black/10 transition-all duration-500 ease-out sm:min-h-[27rem] lg:min-h-[29rem] ${idx === 1 ? "lg:-translate-y-4" : ""}`}
               >
                 <div class="absolute -top-4 left-6 flex h-8 w-8 items-center justify-center rounded-full bg-primary">
                   <span class="font-serif text-2xl text-primary-foreground">
@@ -961,6 +1007,7 @@ const sectionLeadClass =
                 <div class="mb-4 flex items-center gap-4 pt-4">
                   <div class="relative h-16 w-16 overflow-hidden rounded-full ring-4 ring-primary/20">
                     <img
+                      data-testimonial-image
                       src={testimonial.image}
                       alt={testimonial.name}
                       class="h-full w-full object-cover"
@@ -968,22 +1015,76 @@ const sectionLeadClass =
                     />
                   </div>
                   <div>
-                    <p class="font-bold text-foreground">{testimonial.name}</p>
-                    <p class="text-sm text-muted-foreground">Alumna</p>
+                    <p data-testimonial-name class="font-bold text-foreground">
+                      {testimonial.name}
+                    </p>
+                    <p
+                      data-testimonial-role
+                      class="text-sm text-muted-foreground"
+                    >
+                      {testimonial.role}
+                    </p>
                   </div>
                 </div>
-                <p class="leading-relaxed text-muted-foreground">
-                  {testimonial.quote}
+                <p
+                  data-testimonial-quote
+                  class="line-clamp-[10] italic leading-relaxed text-muted-foreground sm:line-clamp-[12]"
+                >
+                  &ldquo;{testimonial.quote}&rdquo;
                 </p>
               </div>
             ))
           }
+        </div>
+
+        <div class="mt-8 flex items-center justify-center gap-4">
+          <button
+            type="button"
+            data-testimonial-prev
+            aria-label="Ver testimonios anteriores"
+            class="flex h-12 w-12 items-center justify-center rounded-full border border-primary/30 bg-foreground/90 text-card shadow-lg shadow-black/15 transition hover:-translate-y-1 hover:border-primary hover:bg-primary hover:text-primary-foreground"
+          >
+            <svg
+              class="h-5 w-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M15 19l-7-7 7-7"></path>
+            </svg>
+          </button>
+          <button
+            type="button"
+            data-testimonial-next
+            aria-label="Ver testimonios siguientes"
+            class="flex h-12 w-12 items-center justify-center rounded-full border border-primary/30 bg-foreground/90 text-card shadow-lg shadow-black/15 transition hover:-translate-y-1 hover:border-primary hover:bg-primary hover:text-primary-foreground"
+          >
+            <svg
+              class="h-5 w-5"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M9 5l7 7-7 7"></path>
+            </svg>
+          </button>
         </div>
       </div>
     </section>
 
     <GoldenSectionDivider />
 
+    <!-- Contacto Section -->
     <section
       id="contacto"
       class="scroll-mt-28 bg-foreground relative py-14 lg:scroll-mt-36 lg:py-20"
@@ -1102,6 +1203,7 @@ const sectionLeadClass =
       </div>
     </section>
 
+    <!-- Footer -->
     <footer class="border-t border-card/10 bg-foreground py-12">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div
@@ -1129,6 +1231,92 @@ const sectionLeadClass =
     <WhatsappWidget />
   </div>
 </BaseLayout>
+
+<script define:vars={{ testimonials }}>
+  const testimonialCards = [
+    ...document.querySelectorAll("[data-testimonial-card]"),
+  ];
+  const testimonialPrev = document.querySelector("[data-testimonial-prev]");
+  const testimonialNext = document.querySelector("[data-testimonial-next]");
+  let testimonialStart = 0;
+  let testimonialTimer;
+
+  const getVisibleTestimonials = () =>
+    testimonialCards.map(
+      (_, index) =>
+        testimonials[(testimonialStart + index) % testimonials.length],
+    );
+
+  const preloadTestimonialImages = () => {
+    testimonials.forEach((testimonial) => {
+      const image = new Image();
+      image.src = testimonial.image;
+    });
+  };
+
+  const renderTestimonials = () => {
+    getVisibleTestimonials().forEach((testimonial, index) => {
+      const card = testimonialCards[index];
+      const image = card.querySelector("[data-testimonial-image]");
+      const name = card.querySelector("[data-testimonial-name]");
+      const role = card.querySelector("[data-testimonial-role]");
+      const quote = card.querySelector("[data-testimonial-quote]");
+
+      image.src = testimonial.image;
+      image.alt = testimonial.name;
+      name.textContent = testimonial.name;
+      role.textContent = testimonial.role;
+      quote.textContent = `“${testimonial.quote}”`;
+    });
+  };
+
+  const rotateTestimonials = (direction = -1) => {
+    testimonialCards.forEach((card, index) => {
+      card.classList.add("opacity-0");
+      card.classList.toggle("-translate-x-4", direction < 0 && index === 0);
+      card.classList.toggle("translate-x-4", direction < 0 && index === 2);
+      card.classList.toggle("translate-x-4", direction > 0 && index === 0);
+      card.classList.toggle("-translate-x-4", direction > 0 && index === 2);
+    });
+
+    window.setTimeout(() => {
+      testimonialStart =
+        (testimonialStart + direction + testimonials.length) %
+        testimonials.length;
+      renderTestimonials();
+
+      testimonialCards.forEach((card) => {
+        card.classList.remove("opacity-0", "-translate-x-4", "translate-x-4");
+      });
+    }, 260);
+  };
+
+  const restartTestimonials = () => {
+    window.clearInterval(testimonialTimer);
+    testimonialTimer = window.setInterval(() => rotateTestimonials(-1), 5200);
+  };
+
+  if (
+    testimonialCards.length &&
+    testimonials.length > testimonialCards.length
+  ) {
+    if ("requestIdleCallback" in window) {
+      window.requestIdleCallback(preloadTestimonialImages);
+    } else {
+      window.setTimeout(preloadTestimonialImages, 1200);
+    }
+
+    testimonialPrev?.addEventListener("click", () => {
+      rotateTestimonials(1);
+      restartTestimonials();
+    });
+    testimonialNext?.addEventListener("click", () => {
+      rotateTestimonials(-1);
+      restartTestimonials();
+    });
+    restartTestimonials();
+  }
+</script>
 
 <script>
   const menuToggle = document.querySelector("[data-menu-toggle]");

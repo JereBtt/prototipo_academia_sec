@@ -1,3 +1,11 @@
+---
+const WIDGET_WHATSAPP_MESSAGE =
+  "Buenasss! Me gustaria saber mas sobre las clases de salsa y bachata.";
+const widgetWhatsappHref = `https://wa.me/5493513715379?text=${encodeURIComponent(
+  WIDGET_WHATSAPP_MESSAGE,
+)}`;
+---
+
 <button
   type="button"
   aria-label="Cerrar contacto"
@@ -36,7 +44,7 @@
 
       <a
         data-whatsapp-link
-        href="https://wa.me/5493513715379?text=Hola!%20Quiero%20consultar%20por%20las%20clases%20de%20salsa%20y%20bachata."
+        href={widgetWhatsappHref}
         target="_blank"
         rel="noopener noreferrer"
         class="flex w-full items-center justify-center gap-2 rounded-xl bg-[#25D366] px-4 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-[#20ba5c] lg:py-4 lg:text-base"
